@@ -1,0 +1,76 @@
+---
+interface Linha {
+  id: string;
+  egp: string;
+  coordenador: string;
+}
+
+interface Props {
+  legenda: string;
+  rotuloRegiao: string;
+  linhas: Linha[];
+}
+
+const { legenda, rotuloRegiao, linhas } = Astro.props;
+---
+
+<div class="tabela-rolagem" tabindex="0" role="region" aria-label={rotuloRegiao}>
+  <table>
+    <caption>{legenda}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Atribuições do EGP</th>
+        <th scope="col">Responsabilidade do coordenador / setores</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        linhas.map((linha) => (
+          <tr>
+            <td>{linha.egp}</td>
+            <td>{linha.coordenador}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .tabela-rolagem {
+    overflow-x: auto;
+    border: 1px solid var(--linha);
+    border-radius: var(--r);
+    background: var(--superficie);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 34rem;
+  }
+
+  caption {
+    text-align: left;
+    padding: var(--esp-2) var(--esp-3);
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.85rem var(--esp-3);
+    border-top: 1px solid var(--linha);
+    vertical-align: top;
+    font-size: 0.9688rem;
+  }
+
+  thead th {
+    background: var(--marca-suave);
+    color: var(--marca-forte);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>

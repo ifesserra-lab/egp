@@ -1,0 +1,25 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "runners": [
+      "axe",
+      "htmlcs"
+    ],
+    "threshold": 0,
+    "timeout": 30000,
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox"
+      ]
+    }
+  },
+  "urls": [
+    "http://localhost:4321/",
+    "http://localhost:4321/sobre",
+    "http://localhost:4321/servicos",
+    "http://localhost:4321/fluxos",
+    "http://localhost:4321/limites",
+    "http://localhost:4321/ecossistema",
+    "http://localhost:4321/contato"
+  ]
+}

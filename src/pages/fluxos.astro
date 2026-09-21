@@ -1,0 +1,96 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const pagina = await getEntry('paginas', 'fluxos');
+if (!pagina) throw new Error('Conteúdo "fluxos" ausente em src/content/paginas/.');
+const { Content } = await render(pagina);
+
+const egp = await getEntry('institucional', 'egp');
+if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
+
+const fluxos = (await getCollection('fluxos')).sort((a, b) => a.data.numero - b.data.numero);
+const corpos = await Promise.all(fluxos.map(async (fluxo) => ({ fluxo, render: await render(fluxo) })));
+---
+
+<Base titulo={pagina.data.titulo} descricao={pagina.data.descricao} rotaAtual="/fluxos">
+  <section class="secao">
+    <div class="env">
+      <h1>{pagina.data.titulo}</h1>
+      <div class="prosa"><Content /></div>
+
+      <div class="aviso regra">
+        <span class="regra__selo">Regra de Ouro</span>
+        <p>{egp.data.regraDeOuro}</p>
+      </div>
+
+      <div class="grade">
+        {
+          corpos.map(({ fluxo, render: { Content: Corpo } }) => (
+            <article class="cartao fluxo" id={fluxo.id}>
+              <span class="fluxo__n">Fluxo {String(fluxo.data.numero).padStart(2, '0')}</span>
+              <h2>{fluxo.data.nome}</h2>
+              <div class="prosa">
+                <Corpo />
+              </div>
+              <p class="sowhat">
+                <strong>So what?</strong>
+                {fluxo.data.soWhat}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .regra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-2);
+    align-items: baseline;
+    margin-block: var(--esp-4);
+  }
+
+  .regra p {
+    margin: 0;
+    flex: 1 1 20rem;
+  }
+
+  .regra__selo {
+    font-weight: 700;
+    color: var(--destaque);
+    white-space: nowrap;
+  }
+
+  .fluxo__n {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--marca);
+    letter-spacing: 0.1em;
+    display: block;
+  }
+
+  .fluxo h2 {
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  .sowhat {
+    background: var(--marca-suave);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  .sowhat strong {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+  }
+</style>

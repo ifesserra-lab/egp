@@ -1,0 +1,79 @@
+---
+/**
+ * Renderiza um canal oficial. Canal "pendente" nunca exibe endereço nem link (FR-012).
+ */
+interface Canal {
+  tipo: 'email' | 'telefone' | 'site' | 'ferramenta';
+  rotulo: string;
+  situacao: 'ativo' | 'pendente';
+  endereco?: string | undefined;
+  observacao?: string | undefined;
+  avisoPendencia?: string | undefined;
+}
+
+interface Props {
+  canal: Canal;
+  compacto?: boolean;
+}
+
+const { canal, compacto = false } = Astro.props;
+/** Telefone vira link `tel:` com o país e só os dígitos; o texto exibido mantém a formatação. */
+const somenteDigitos = (valor: string) => valor.replace(/\D/g, '');
+
+let href = canal.endereco;
+if (canal.endereco) {
+  if (canal.tipo === 'email') href = `mailto:${canal.endereco}`;
+  else if (canal.tipo === 'telefone') href = `tel:+55${somenteDigitos(canal.endereco)}`;
+}
+---
+
+<li class:list={['canal', compacto && 'canal--compacto']}>
+  <h3>{canal.rotulo}</h3>
+  {
+    canal.situacao === 'ativo' ? (
+      <>
+        <span class="selo selo--ativo">Ativo</span>
+        <p class="canal__endereco">
+          <a href={href}>{canal.endereco}</a>
+        </p>
+      </>
+    ) : (
+      <>
+        <span class="selo selo--pendente">Em implantação</span>
+        <p>{canal.avisoPendencia}</p>
+      </>
+    )
+  }
+  {canal.observacao && <p class="canal__obs">{canal.observacao}</p>}
+</li>
+
+<style>
+  .canal {
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-radius: var(--r);
+    padding: var(--esp-3);
+  }
+
+  .canal--compacto {
+    padding: var(--esp-2);
+    background: transparent;
+    border: none;
+  }
+
+  h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+    color: var(--texto);
+  }
+
+  p {
+    margin: 0.35rem 0 0;
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  .canal__endereco {
+    word-break: break-word;
+  }
+</style>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# O endereço do sitemap acompanha a configuração "site" em astro.config.mjs,
+# preenchida quando a CTI confirmar o domínio institucional.
+Sitemap: https://exemplo-pendente.ifes.edu.br/sitemap-index.xml

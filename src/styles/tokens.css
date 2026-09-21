@@ -1,0 +1,68 @@
+/*
+ * Design tokens do site do EGP — Campus Serra.
+ * Paleta provisória: substituir pelos valores do manual de identidade do Ifes.
+ * Todos os pares texto/fundo abaixo atendem contraste mínimo 4.5:1 (constituição, princípio III).
+ */
+:root {
+  --verde-900: #0b3d2c;
+  --verde-700: #155c42;
+  --verde-600: #1b7350;
+  --verde-100: #e4f2ea;
+  --areia-50: #fbfaf7;
+  --tinta-900: #14201b;
+  --tinta-700: #35443d;
+  --borda: #d7ded9;
+
+  --fundo: var(--areia-50);
+  --superficie: #ffffff;
+  --texto: var(--tinta-900);
+  --texto-suave: var(--tinta-700);
+  --linha: var(--borda);
+  --marca: var(--verde-700);
+  --marca-forte: var(--verde-900);
+  --marca-suave: var(--verde-100);
+  --destaque: #a8560a;
+  --alerta-bg: #fdf3e3;
+  --alerta-borda: #e0bb7a;
+
+  --largura: 68rem;
+  --leitura: 42rem;
+  --r: 10px;
+  --esp-1: 0.5rem;
+  --esp-2: 1rem;
+  --esp-3: 1.5rem;
+  --esp-4: 2.5rem;
+  --esp-5: 4rem;
+
+  --fonte: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --fundo: #0e1512;
+    --superficie: #16201c;
+    --texto: #eef3f0;
+    --texto-suave: #bcc9c3;
+    --linha: #2b3a33;
+    --marca: #7fc9a4;
+    --marca-forte: #a7dcc0;
+    --marca-suave: #17332a;
+    --destaque: #e9b573;
+    --alerta-bg: #2a2115;
+    --alerta-borda: #6b5326;
+  }
+}
+
+:root[data-theme='dark'] {
+  --fundo: #0e1512;
+  --superficie: #16201c;
+  --texto: #eef3f0;
+  --texto-suave: #bcc9c3;
+  --linha: #2b3a33;
+  --marca: #7fc9a4;
+  --marca-forte: #a7dcc0;
+  --marca-suave: #17332a;
+  --destaque: #e9b573;
+  --alerta-bg: #2a2115;
+  --alerta-borda: #6b5326;
+}

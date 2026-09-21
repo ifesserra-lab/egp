@@ -1,0 +1,53 @@
+---
+interface Props {
+  itens: Array<{ rota: string; rotulo: string }>;
+  rotaAtual: string;
+}
+
+const { itens, rotaAtual } = Astro.props;
+---
+
+<nav aria-label="Navegação principal">
+  <ul>
+    {
+      itens.map((item) => (
+        <li>
+          <a href={item.rota} aria-current={item.rota === rotaAtual ? 'page' : undefined}>
+            {item.rotulo}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--texto-suave);
+    padding: 0.35rem 0.1rem;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+  }
+
+  a:hover {
+    color: var(--marca-forte);
+    border-bottom-color: var(--marca);
+  }
+
+  a[aria-current='page'] {
+    color: var(--marca-forte);
+    border-bottom-color: var(--marca);
+    font-weight: 600;
+  }
+</style>

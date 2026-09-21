@@ -1,0 +1,41 @@
+@media print {
+  .topo,
+  .pular,
+  .botoes,
+  .rodape__nav {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .secao {
+    padding-block: 1rem;
+    border: none;
+    break-inside: avoid;
+  }
+
+  .tabela-rolagem {
+    overflow: visible !important;
+    border: 1px solid #000;
+  }
+
+  table {
+    min-width: 0 !important;
+    break-inside: auto;
+  }
+
+  tr,
+  .cartao {
+    break-inside: avoid;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    word-break: break-all;
+  }
+}

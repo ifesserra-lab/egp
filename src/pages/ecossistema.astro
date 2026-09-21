@@ -1,0 +1,65 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const pagina = await getEntry('paginas', 'ecossistema');
+if (!pagina) throw new Error('Conteúdo "ecossistema" ausente em src/content/paginas/.');
+const { Content } = await render(pagina);
+
+const unidades = (await getCollection('ecossistema')).sort((a, b) => a.data.ordem - b.data.ordem);
+const corpos = await Promise.all(unidades.map(async (u) => ({ unidade: u, render: await render(u) })));
+---
+
+<Base titulo={pagina.data.titulo} descricao={pagina.data.descricao} rotaAtual="/ecossistema">
+  <section class="secao">
+    <div class="env">
+      <h1>{pagina.data.titulo}</h1>
+      <div class="prosa"><Content /></div>
+
+      <div class="grade" style="margin-top: var(--esp-4)">
+        {
+          corpos.map(({ unidade, render: { Content: Corpo } }) => (
+            <article class="cartao" id={unidade.id}>
+              <h2>{unidade.data.nome}</h2>
+              <p class="papel">{unidade.data.papel}</p>
+              <dl>
+                <dt>Relação com o EGP</dt>
+                <dd>{unidade.data.relacaoComEgp}</dd>
+              </dl>
+              <div class="prosa">
+                <Corpo />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h2 {
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  .papel {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 0.9688rem;
+  }
+
+  dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+  }
+</style>
