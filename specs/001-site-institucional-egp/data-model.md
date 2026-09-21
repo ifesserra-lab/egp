@@ -14,7 +14,7 @@ de sessão. Cada entidade da spec vira uma content collection validada por Zod n
 | Unidade do Ecossistema | `ecossistema` | `glob` | `src/content/ecossistema/*.md` | 3 |
 | — (texto de abertura por página) | `paginas` | `glob` | `src/content/paginas/*.md` | 1 por rota |
 | Fronteira de Responsabilidade | `fronteiras` | `file` | `src/data/fronteiras.yaml` | 4 |
-| Canal de Atendimento | `contatos` | `file` | `src/data/contatos.yaml` | 2 |
+| Canal de Atendimento | `contatos` | `file` | `src/data/contatos.yaml` | 1 |
 | Identidade institucional | `institucional` | `file` | `src/data/institucional.yaml` | 1 |
 
 ## Entidades
@@ -106,7 +106,8 @@ que a tabela nunca renderize célula vazia.
 
 **Regras (FR-012, princípio V)**: a validação cruzada `situacao × endereco` falha o build se um canal
 pendente trouxer endereço ou se um canal ativo não trouxer. Canal `pendente` renderiza aviso, nunca
-link. Estado atual: e-mail oficial e telefone, ambos `ativo`. O endereço do próprio site e
+link. Estado atual: apenas o e-mail oficial, `ativo`. O telefone está desabilitado no YAML
+(bloco comentado) até que o número seja confirmado. O endereço do próprio site e
 ferramentas internas de trabalho não são listados como canais.
 
 **Transição de estado**: `pendente → ativo` ocorre por edição do YAML quando a conta ou o domínio

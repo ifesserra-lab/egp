@@ -51,8 +51,7 @@ principal em qualquer rota; nenhum caminho exige mais de 2 cliques a partir da H
 2. Em `src/data/contatos.yaml`, mudar o e-mail para `situacao: ativo` sem informar `endereco` e
    rodar `npm run build`.
 
-**Esperado**: na etapa 1, e-mail e telefone aparecem como canais ativos, com link `mailto:` e
-`tel:` respectivamente. Na etapa 2, o build falha citando `contatos.yaml`, o campo `endereco` e a regra
+**Esperado**: na etapa 1, o e-mail aparece como canal ativo, com link `mailto:`. Na etapa 2, o build falha citando `contatos.yaml`, o campo `endereco` e a regra
 FR-012 — nenhuma página é publicada.
 
 ## Cenário 4 — Acessibilidade (SC-004, FR-019)
