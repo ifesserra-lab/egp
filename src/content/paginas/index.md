@@ -2,9 +2,8 @@
 titulo: Escritório de Gestão de Projetos
 descricao: Suporte tático e segurança jurídica para os projetos de pesquisa, extensão e inovação do Campus Serra do Ifes.
 rota: "/"
-ordemNav: 1
-rotuloNav: Início
+manchete: Seu projeto aprovado, sem a burocracia no caminho
 ---
 
-O EGP desonera pesquisadores e extensionistas das tarefas burocráticas, para que docentes e
-técnicos se concentrem na excelência científica, tecnológica e no impacto social.
+O EGP conecta pesquisadores e extensionistas do Campus Serra ao fomento, à fundação de apoio e à
+conformidade legal — para que você se concentre na ciência, na tecnologia e no impacto social.

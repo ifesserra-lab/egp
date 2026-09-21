@@ -93,12 +93,26 @@
   }
 
   .secao {
-    padding-block: var(--esp-5);
-    border-bottom: 1px solid var(--linha);
+    padding-block: var(--esp-6);
   }
 
-  .secao:last-of-type {
-    border-bottom: none;
+  .secao + .secao {
+    border-top: 1px solid var(--linha);
+  }
+
+  .cabecalho-secao {
+    max-width: var(--leitura);
+    margin-bottom: var(--esp-4);
+  }
+
+  .cabecalho-secao h2 {
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+    margin: 0.4rem 0 0.6rem;
+  }
+
+  .cabecalho-secao p {
+    color: var(--texto-suave);
+    margin: 0;
   }
 
   .prosa {
@@ -151,6 +165,12 @@
     border: 1px solid var(--linha);
     border-radius: var(--r);
     padding: var(--esp-3);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  }
+
+  .btn--claro {
+    background: #fff;
+    color: var(--verde-900);
   }
 
   .cartao > * + * {
@@ -159,8 +179,8 @@
 
   .btn {
     display: inline-block;
-    padding: 0.7rem 1.2rem;
-    border-radius: var(--r);
+    padding: 0.72rem 1.3rem;
+    border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
   }

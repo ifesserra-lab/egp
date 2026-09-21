@@ -3,9 +3,10 @@ import { comBase } from '../lib/url';
 
 interface Props {
   itens: Array<{ rota: string; rotulo: string }>;
+  cta: { rota: string; rotulo: string };
 }
 
-const { itens } = Astro.props;
+const { itens, cta } = Astro.props;
 ---
 
 <nav aria-label="Navegação principal">
@@ -17,6 +18,9 @@ const { itens } = Astro.props;
         </li>
       ))
     }
+    <li>
+      <a class="btn btn--primario" href={cta.rota}>{cta.rotulo}</a>
+    </li>
   </ul>
 </nav>
 
@@ -25,7 +29,8 @@ const { itens } = Astro.props;
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
     margin: 0;
     padding: 0;
     font-size: 0.9375rem;
@@ -42,6 +47,16 @@ const { itens } = Astro.props;
   a:hover {
     color: var(--marca-forte);
     border-bottom-color: var(--marca);
+  }
+
+  a.btn {
+    border-bottom: none;
+    color: #fff;
+  }
+
+  a.btn:hover {
+    color: #fff;
+    border-bottom: none;
   }
 
 </style>

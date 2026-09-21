@@ -74,6 +74,8 @@ Prosa de abertura de cada rota, mantida fora dos componentes (princípio II).
 | `titulo` | string | sim | usado em `<h1>` e no `<title>` |
 | `descricao` | string | sim | 50–160 caracteres; vira `<meta name="description">` |
 | `ordemNav` | inteiro | não | posição na navegação principal; ausente = fora do menu |
+| `manchete` | string | não | título de destaque da seção inicial |
+| `chamadaSecao` | string | não | título editorial da seção |
 | corpo Markdown | texto | sim | texto de abertura |
 
 **Regras**: toda rota do contrato tem exatamente um registro; `ordemNav` único quando presente.
@@ -127,6 +129,9 @@ Registro único com os dados transversais da Carta (seções 1 e 2).
 | `missao` | string | sim | texto literal da missão |
 | `identidades` | lista de string | sim | "Motor Tático", "Engrenagem de Maturidade Institucional" |
 | `regraDeOuro` | string | sim | texto da Regra de Ouro |
+| `ctaNav` | string | sim | rótulo do botão de ação da navegação |
+| `chamadaTitulo` | string | sim | título da faixa de chamada final |
+| `chamadaTexto` | string | sim | texto da faixa de chamada final |
 | `atualizadoEm` | data ISO | sim | última revisão do conteúdo; exibido no rodapé |
 
 ## Invariantes globais

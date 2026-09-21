@@ -25,14 +25,15 @@
   --alerta-bg: #fdf3e3;
   --alerta-borda: #e0bb7a;
 
-  --largura: 68rem;
-  --leitura: 42rem;
-  --r: 10px;
+  --largura: 74rem;
+  --leitura: 44rem;
+  --r: 14px;
   --esp-1: 0.5rem;
   --esp-2: 1rem;
   --esp-3: 1.5rem;
   --esp-4: 2.5rem;
   --esp-5: 4rem;
+  --esp-6: 6rem;
 
   --fonte: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }

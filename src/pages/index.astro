@@ -33,11 +33,6 @@ const corposUnidades = await Promise.all(unidades.map(async (u) => ({ item: u, .
 const fronteiras = (await getCollection('fronteiras')).sort((a, b) => a.data.ordem - b.data.ordem);
 const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b.data.ordem);
 
-const numeros = [
-  { valor: 'Custo zero', rotulo: 'Para o orçamento regular do campus' },
-  { valor: egp.data.cargaHoraria, rotulo: `Atuação conforme a ${egp.data.portaria}` },
-  { valor: 'Protagonismo TA', rotulo: 'Técnicos administrativos como coordenadores' },
-];
 ---
 
 <Base titulo={inicio.data.titulo} descricao={inicio.data.descricao}>
@@ -45,14 +40,14 @@ const numeros = [
     <div class="env hero__grade">
       <div>
         <p class="etiqueta">{egp.data.vinculo} · {egp.data.portaria}</p>
-        <h1>Segurança jurídica e administrativa para os projetos do Campus Serra</h1>
+        <h1>{inicio.data.manchete ?? inicio.data.titulo}</h1>
         <div class="prosa"><inicio.Content /></div>
         <ul class="apelidos">
           {egp.data.identidades.map((identidade) => <li>{identidade}</li>)}
         </ul>
         <div class="botoes">
-          <a class="btn btn--primario" href="#servicos">Ver os serviços</a>
-          <a class="btn btn--secundario" href="#contato">Falar com o EGP</a>
+          <a class="btn btn--primario" href="#contato">{egp.data.ctaNav}</a>
+          <a class="btn btn--secundario" href="#servicos">Conhecer os serviços</a>
         </div>
       </div>
       <div class="missao">
@@ -64,44 +59,27 @@ const numeros = [
 
   <section class="secao" id="sobre" aria-labelledby="t-sobre">
     <div class="env">
-      <h2 id="t-sobre">{sobre.data.titulo}</h2>
-      <div class="prosa"><sobre.Content /></div>
-
-      <h3>Modelo operacional e sustentabilidade</h3>
-      <p class="prosa">
-        Diante de um severo cenário de restrição fiscal e da escassez de recursos orçamentários
-        ordinários para investimento, o EGP viabiliza a modernização do campus por meio de um
-        modelo de custeio autossustentável. A manutenção da unidade (Opex/Custeio) é financiada
-        via recursos de projetos aprovados (bolsas de apoio e taxas de custos indiretos),
-        resultando em custo zero para o orçamento regular.
-      </p>
-
-      <div class="numeros">
-        {numeros.map((n) => (
-          <div class="numero">
-            <b>{n.valor}</b>
-            <span>{n.rotulo}</span>
-          </div>
-        ))}
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Sobre o EGP</p>
+        <h2 id="t-sobre">{sobre.data.chamadaSecao ?? sobre.data.titulo}</h2>
+        <div class="prosa"><sobre.Content /></div>
       </div>
 
-      <p class="prosa">
-        Estrategicamente, o EGP fomenta o protagonismo dos Técnicos Administrativos (TAs) como
-        coordenadores. Ao empoderar os TAs para liderarem a execução gestora, o campus dobra sua
-        capacidade operacional, profissionalizando o manejo do portfólio de projetos do campus.
-      </p>
     </div>
   </section>
 
   <section class="secao" id="servicos" aria-labelledby="t-servicos">
     <div class="env">
-      <h2 id="t-servicos">{servicos.data.titulo}</h2>
-      <div class="prosa"><servicos.Content /></div>
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Serviços</p>
+        <h2 id="t-servicos">{servicos.data.chamadaSecao ?? servicos.data.titulo}</h2>
+        <div class="prosa"><servicos.Content /></div>
+      </div>
 
       <div class="pilares">
         {corposPilares.map(({ item, Content }) => (
           <article class="pilar" id={item.id}>
-            <p class="etiqueta">Pilar {String(item.data.ordem).padStart(2, '0')}</p>
+            <div class="pilar__icone" aria-hidden="true">{String(item.data.ordem).padStart(2, '0')}</div>
             <h3>{item.data.nome}</h3>
             <p class="pilar__objetivo">{item.data.objetivo}</p>
             <div class="prosa"><Content /></div>
@@ -123,8 +101,11 @@ const numeros = [
 
   <section class="secao" id="fluxos" aria-labelledby="t-fluxos">
     <div class="env">
-      <h2 id="t-fluxos">{fluxos.data.titulo}</h2>
-      <div class="prosa"><fluxos.Content /></div>
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Como funciona</p>
+        <h2 id="t-fluxos">{fluxos.data.chamadaSecao ?? fluxos.data.titulo}</h2>
+        <div class="prosa"><fluxos.Content /></div>
+      </div>
 
       <div class="aviso regra">
         <span class="regra__selo">Regra de Ouro</span>
@@ -134,7 +115,7 @@ const numeros = [
       <div class="grade">
         {corposFluxos.map(({ item, Content }) => (
           <article class="cartao fluxo" id={item.id}>
-            <span class="fluxo__n">Fluxo {String(item.data.numero).padStart(2, '0')}</span>
+            <div class="passo__n" aria-hidden="true">{item.data.numero}</div>
             <h3>{item.data.nome}</h3>
             <div class="prosa"><Content /></div>
             <p class="sowhat">
@@ -149,8 +130,11 @@ const numeros = [
 
   <section class="secao" id="limites" aria-labelledby="t-limites">
     <div class="env pilha">
-      <h2 id="t-limites">{limites.data.titulo}</h2>
-      <div class="prosa"><limites.Content /></div>
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Limites de atuação</p>
+        <h2 id="t-limites">{limites.data.chamadaSecao ?? limites.data.titulo}</h2>
+        <div class="prosa"><limites.Content /></div>
+      </div>
       <TabelaComparativa
         legenda="Fronteiras de responsabilidade entre o EGP e os coordenadores e setores."
         rotuloRegiao="Tabela de fronteiras de responsabilidade"
@@ -161,8 +145,11 @@ const numeros = [
 
   <section class="secao" id="ecossistema" aria-labelledby="t-ecossistema">
     <div class="env">
-      <h2 id="t-ecossistema">{ecossistema.data.titulo}</h2>
-      <div class="prosa"><ecossistema.Content /></div>
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Ecossistema de inovação</p>
+        <h2 id="t-ecossistema">{ecossistema.data.chamadaSecao ?? ecossistema.data.titulo}</h2>
+        <div class="prosa"><ecossistema.Content /></div>
+      </div>
 
       <div class="grade" style="margin-top: var(--esp-4)">
         {corposUnidades.map(({ item, Content }) => (
@@ -182,12 +169,31 @@ const numeros = [
 
   <section class="secao" id="contato" aria-labelledby="t-contato">
     <div class="env">
-      <h2 id="t-contato">{contato.data.titulo}</h2>
-      <div class="prosa"><contato.Content /></div>
+      <div class="cabecalho-secao">
+        <p class="etiqueta">Contato</p>
+        <h2 id="t-contato">{contato.data.chamadaSecao ?? contato.data.titulo}</h2>
+        <div class="prosa"><contato.Content /></div>
+      </div>
       <ul class="canais">
         {canais.map((canal) => <CanalAtendimento canal={canal.data} nivel={3} />)}
       </ul>
       <p class="prosa endereco">{egp.data.nomeUnidade}</p>
+    </div>
+  </section>
+
+  <section class="chamada" aria-labelledby="t-chamada">
+    <div class="env chamada__grade">
+      <div>
+        <h2 id="t-chamada">{egp.data.chamadaTitulo}</h2>
+        <p>{egp.data.chamadaTexto}</p>
+      </div>
+      <div class="botoes">
+        {canais
+          .filter((canal) => canal.data.situacao === 'ativo' && canal.data.tipo === 'email')
+          .map((canal) => (
+            <a class="btn btn--claro" href={`mailto:${canal.data.endereco}`}>{canal.data.endereco}</a>
+          ))}
+      </div>
     </div>
   </section>
 </Base>
@@ -265,30 +271,56 @@ const numeros = [
     margin-top: var(--esp-3);
   }
 
-  .numeros {
-    display: grid;
-    gap: var(--esp-2);
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-    margin-block: var(--esp-3);
-  }
-
-  .numero {
-    background: var(--superficie);
-    border: 1px solid var(--linha);
-    border-radius: var(--r);
-    padding: var(--esp-3);
-  }
-
-  .numero b {
-    display: block;
-    font-size: 1.75rem;
+  .pilar__icone {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: var(--marca-suave);
     color: var(--marca-forte);
-    line-height: 1.1;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1.1rem;
   }
 
-  .numero span {
-    color: var(--texto-suave);
-    font-size: 0.9375rem;
+  .passo__n {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    background: var(--marca-forte);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .chamada {
+    background: var(--marca-forte);
+    color: #fff;
+    padding-block: var(--esp-5);
+  }
+
+  .chamada__grade {
+    display: grid;
+    gap: var(--esp-3);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 52rem) {
+    .chamada__grade {
+      grid-template-columns: 3fr 2fr;
+      align-items: center;
+    }
+  }
+
+  .chamada h2 {
+    font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.2rem);
+  }
+
+  .chamada p {
+    color: #cfe6da;
+    margin: 0.6rem 0 0;
+    max-width: var(--leitura);
   }
 
   .pilares {
