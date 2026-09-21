@@ -41,9 +41,9 @@ jobs:
 
       - name: Verificar links internos
         run: |
-          npx astro preview &
-          npx wait-on http://localhost:4321 --timeout 60000
-          npm run test:links
+          npx astro preview
+          npx wait-on "http://localhost:4321${SITE_BASE}" --timeout 60000
+          npx linkinator "http://localhost:4321${SITE_BASE}" --recurse --skip "^https?://(?!localhost)"
 
       - uses: actions/upload-pages-artifact@v3
         with:
