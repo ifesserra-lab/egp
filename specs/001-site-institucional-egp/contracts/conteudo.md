@@ -82,7 +82,7 @@ arquivo muda URL, portanto é mudança de contrato.
   tipo: email
   rotulo: E-mail oficial
   situacao: ativo
-  endereco: pge.serra@ifes.edu.br
+  endereco: escritorioprojetos.ser@ifes.edu.br
   observacao: Centralização de demandas e histórico oficial.
 
 - id: exemplo-canal-ativo
