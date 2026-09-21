@@ -1,7 +1,7 @@
 > **Documento original — somente leitura.**
 > Este arquivo preserva a Carta de Serviços como recebida, para auditoria e rastreabilidade.
 > **Não edite aqui.** O conteúdo publicado no site vive em `src/content/` (Markdown) e
-> `src/data/` (YAML) — ver [docs/edicao-de-conteudo.md](../edicao-de-conteudo.md).
+> `src/data/` (YAML) — ver [Como editar o conteúdo](../como-editar-conteudo.md).
 > As seções 7 (indicadores) e 8 (cases) permanecem neste documento, mas não são publicadas no
 > site, por decisão do EGP em 2026-09-21.
 

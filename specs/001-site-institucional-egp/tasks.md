@@ -106,7 +106,7 @@ de build exigidos pela constituição (`astro check`, validação Zod no build, 
 **Independent Test**: Servidor sem experiência em programação altera um texto e acrescenta uma unidade do ecossistema seguindo a documentação, em menos de 15 minutos (SC-008)
 
 - [X] T040 [US4] Escrever em `README.md` o guia de edição de conteúdo: onde fica cada tipo de conteúdo, como alterar texto, como incluir item, como publicar e o que significa `situacao: pendente` (FR-027)
-- [X] T041 [P] [US4] Criar `docs/edicao-de-conteudo.md` com exemplos completos de arquivo Markdown de pilar e de unidade do ecossistema e de entrada YAML de contato e de fronteira, copiáveis por quem edita (FR-025)
+- [X] T041 [P] [US4] Criar o guia de edição de conteúdo em `docs/` (hoje `docs/como-editar-conteudo.md`) com exemplos completos de arquivo Markdown de pilar e de unidade do ecossistema e de entrada YAML de contato e de fronteira, copiáveis por quem edita (FR-025)
 - [X] T042 [US4] Garantir que a falha de validação Zod identifique arquivo e campo com mensagem em português, ajustando as mensagens dos schemas em `src/content.config.ts` (FR-026)
 - [X] T043 [US4] Executar o cenário 8 do `quickstart.md`: alterar o texto de um pilar e acrescentar uma unidade do ecossistema nova, confirmando que a listagem se atualiza sozinha e que nenhum arquivo fora de `src/content/` e `src/data/` foi tocado
 
@@ -140,7 +140,7 @@ de build exigidos pela constituição (`astro check`, validação Zod no build, 
 - [X] T052 Executar `npm run verify` e corrigir toda falha até o gate passar inteiro (constituição, seção de quality gates)
 - [X] T053 Executar os cenários 5 e 6 do `quickstart.md`: conferir ausência de requisição a terceiros e de cookies, conteúdo legível com JavaScript desativado, e layout sem rolagem horizontal a 320 px (SC-005, SC-007, SC-009)
 - [X] T054 Auditar item a item o site publicado contra `docs/fonte/carta-servicos-original.md` e registrar o resultado (SC-001, FR-002)
-- [X] T055 Documentar em `docs/publicacao.md` o procedimento de deploy do `dist/` no ambiente da CTI e os campos `site`/`base` a preencher quando o domínio for definido (research D10)
+- [X] T055 Documentar em `docs/` (hoje `docs/como-publicar.md`) o procedimento de deploy do `dist/` no ambiente da CTI e os campos `site`/`base` a preencher quando o domínio for definido (research D10)
 
 ---
 
