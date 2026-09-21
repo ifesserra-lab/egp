@@ -8,10 +8,12 @@
   endereco: escritorioprojetos.ser@ifes.edu.br
   observacao: Centralização de demandas e histórico oficial.
 
-- id: telefone
-  ordem: 2
-  tipo: telefone
-  rotulo: Telefone
-  situacao: ativo
-  endereco: (27) 9999-9999
-  observacao: Atendimento durante o horário de expediente do campus.
+# Canal de telefone desabilitado em 2026-09-21: número pendente de confirmação.
+# Para reativar, descomente o bloco abaixo e troque o número pelo real.
+# - id: telefone
+#   ordem: 2
+#   tipo: telefone
+#   rotulo: Telefone
+#   situacao: ativo
+#   endereco: (27) 9999-9999
+#   observacao: Atendimento durante o horário de expediente do campus.
