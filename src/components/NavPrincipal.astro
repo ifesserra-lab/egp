@@ -1,4 +1,6 @@
 ---
+import { comBase } from '../lib/url';
+
 interface Props {
   itens: Array<{ rota: string; rotulo: string }>;
   rotaAtual: string;
@@ -12,7 +14,7 @@ const { itens, rotaAtual } = Astro.props;
     {
       itens.map((item) => (
         <li>
-          <a href={item.rota} aria-current={item.rota === rotaAtual ? 'page' : undefined}>
+          <a href={comBase(item.rota)} aria-current={item.rota === rotaAtual ? 'page' : undefined}>
             {item.rotulo}
           </a>
         </li>

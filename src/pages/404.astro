@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { comBase } from '../lib/url';
 ---
 
 <Base
@@ -13,7 +14,7 @@ import Base from '../layouts/Base.astro';
       <p class="prosa">
         O endereço acessado não existe ou foi alterado em uma revisão da Carta de Serviços.
       </p>
-      <p><a class="btn btn--primario" href="/">Voltar para a página inicial</a></p>
+      <p><a class="btn btn--primario" href={comBase('/')}>Voltar para a página inicial</a></p>
     </div>
   </section>
 </Base>

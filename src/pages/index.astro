@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import CartaoPilar from '../components/CartaoPilar.astro';
 import CanalAtendimento from '../components/CanalAtendimento.astro';
+import { comBase } from '../lib/url';
 
 const pagina = await getEntry('paginas', 'index');
 if (!pagina) throw new Error('Conteúdo "index" ausente em src/content/paginas/.');
@@ -26,8 +27,8 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
           {egp.data.identidades.map((identidade) => <li>{identidade}</li>)}
         </ul>
         <div class="botoes">
-          <a class="btn btn--primario" href="/servicos">Ver os serviços</a>
-          <a class="btn btn--secundario" href="/contato">Falar com o EGP</a>
+          <a class="btn btn--primario" href={comBase('/servicos')}>Ver os serviços</a>
+          <a class="btn btn--secundario" href={comBase('/contato')}>Falar com o EGP</a>
         </div>
       </div>
       <div class="missao">
@@ -51,7 +52,7 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
               nome={pilar.data.nome}
               resumo={pilar.data.resumo}
               ordem={pilar.data.ordem}
-              href={`/servicos#${pilar.id}`}
+              href={comBase(`/servicos#${pilar.id}`)}
             />
           ))
         }

@@ -1,0 +1,61 @@
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    name: Construir e verificar
+    runs-on: ubuntu-latest
+    env:
+      # Endereço de homologação em GitHub Pages. Quando a CTI confirmar o
+      # domínio institucional, ajuste estas duas variáveis.
+      SITE_URL: https://ifesserra-lab.github.io
+      SITE_BASE: /egp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Verificar tipos e conteúdo
+        run: npm run check
+
+      - name: Construir site estático
+        run: npm run build
+
+      - name: Verificar links internos
+        run: |
+          npx astro preview &
+          npx wait-on http://localhost:4321 --timeout 60000
+          npm run test:links
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publicar:
+    name: Publicar no GitHub Pages
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

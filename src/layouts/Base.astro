@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import NavPrincipal from '../components/NavPrincipal.astro';
 import Rodape from '../components/Rodape.astro';
+import { comBase } from '../lib/url';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/print.css';
@@ -41,14 +42,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={descricao} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={comBase('/favicon.svg')} type="image/svg+xml" />
   </head>
   <body>
     <a class="pular" href="#conteudo-principal">Pular para o conteúdo principal</a>
 
     <header class="topo">
       <div class="env topo__linha">
-        <a class="marca" href="/">
+        <a class="marca" href={comBase('/')}>
           <span class="marca__sigla" aria-hidden="true">EGP</span>
           <span class="marca__nome">
             {egp.data.nomeCurto}
