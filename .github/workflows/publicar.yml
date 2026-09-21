@@ -18,6 +18,7 @@ jobs:
   construir:
     name: Construir e verificar
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       # Endereço de homologação em GitHub Pages. Quando a CTI confirmar o
       # domínio institucional, ajuste estas duas variáveis.
@@ -39,11 +40,15 @@ jobs:
       - name: Construir site estático
         run: npm run build
 
+      # `astro preview` roda como daemon: sem redirecionar a saída, o processo
+      # mantém o step aberto indefinidamente. Daí o redirecionamento e o stop.
       - name: Verificar links internos
+        timeout-minutes: 5
         run: |
-          npx astro preview
+          npx astro preview > /tmp/preview.log 2>&1
           npx wait-on "http://localhost:4321${SITE_BASE}" --timeout 60000
           npx linkinator "http://localhost:4321${SITE_BASE}" --recurse --skip "^https?://(?!localhost)"
+          npx astro preview stop
 
       - uses: actions/upload-pages-artifact@v3
         with:
