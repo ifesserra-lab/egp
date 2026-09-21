@@ -9,7 +9,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "serve:dist": "astro preview --port 4321",
     "test:a11y": "pa11y-ci",
     "test:links": "linkinator http://localhost:4321 --recurse --skip \"^https?://(?!localhost)\"",
     "test:perf": "lhci autorun",

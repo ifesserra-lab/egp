@@ -1,61 +1,44 @@
 # Site do Escritório de Gestão de Projetos (EGP) — Campus Serra
 
-Site institucional do EGP do Campus Serra do Ifes, gerado estaticamente com [Astro](https://astro.build).
-O conteúdo vem da Carta de Serviços do escritório e é editável por qualquer servidor do EGP, sem
-precisar mexer em código.
+Site institucional do EGP do Campus Serra do Ifes, construído a partir da Carta de Serviços do
+escritório.
 
-## Como editar o conteúdo
+**No ar:** <https://ifesserra-lab.github.io/egp/> (homologação)
 
-Todo o texto publicado está em duas pastas:
+O conteúdo do site vive em arquivos de texto no próprio repositório, para que servidores do EGP
+possam atualizá-lo sem mexer em código.
 
-| O que você quer mudar | Onde editar |
+## Por onde começar
+
+| Se você quer… | Leia |
 | --- | --- |
-| Missão, portaria, portfólio, Regra de Ouro, data de atualização | `src/data/institucional.yaml` |
-| Tabela de limites de atuação | `src/data/fronteiras.yaml` |
-| Canais de atendimento | `src/data/contatos.yaml` |
-| Pilares de serviço | `src/content/pilares/` (um arquivo por pilar) |
-| Fluxos operacionais | `src/content/fluxos/` (um arquivo por fluxo) |
-| Unidades do ecossistema de inovação | `src/content/ecossistema/` |
-| Texto de abertura de cada página | `src/content/paginas/` |
+| aprender a editar o site, do zero | [Primeira edição no site](docs/tutorial-primeira-edicao.md) |
+| resolver uma tarefa agora | [Como editar o conteúdo](docs/como-editar-conteudo.md) · [Como publicar](docs/como-publicar.md) |
+| consultar um campo ou comando | [Referência do conteúdo](docs/referencia-conteudo.md) · [Referência dos comandos](docs/referencia-comandos.md) |
+| entender por que o site é assim | [Sobre as decisões do projeto](docs/sobre-as-decisoes.md) |
 
-Passo a passo detalhado, com exemplos copiáveis: [docs/edicao-de-conteudo.md](docs/edicao-de-conteudo.md).
+O índice completo está em [docs/index.md](docs/index.md).
 
-**Canais pendentes.** Um canal com `situacao: pendente` aparece no site como "Em implantação",
-sem endereço. Ao ficar disponível, troque para `situacao: ativo` e preencha `endereco` — o aviso
-some sozinho. O site nunca publica um endereço que ainda não existe.
+## Rodando localmente
 
-## Como rodar
-
-Requer Node.js 22 LTS ou superior.
+Requer Node.js 22 ou superior.
 
 ```bash
-npm install     # uma vez
-npm run dev     # servidor local em http://localhost:4321
-npm run build   # gera o site em dist/
-npm run preview # serve o dist/ para conferência
+npm install
+npm run dev      # http://localhost:4321
+npm run verify   # confere conteúdo, tipos, links e acessibilidade
 ```
 
-## Verificação antes de publicar
+## Como o projeto está organizado
 
-```bash
-npm run check      # tipos e conteúdo
-npm run build      # valida o formato de todo o conteúdo
-npm run test:links # links internos quebrados
-npm run test:a11y  # acessibilidade WCAG 2.1 AA (requer o preview rodando)
-npm run test:perf  # desempenho (Lighthouse >= 95)
-npm run verify     # check + build + links
-```
+- `src/content/` e `src/data/` — todo o conteúdo institucional
+- `src/pages/` — uma rota por arquivo
+- `docs/` — documentação
+- `specs/001-site-institucional-egp/` — especificação, plano e tarefas do desenvolvimento
+- `.specify/memory/constitution.md` — princípios que regem o projeto
 
-Se um arquivo de conteúdo estiver fora do formato, o `build` falha indicando o arquivo e o campo —
-nada incompleto vai para o ar.
+## Pendências para o EGP
 
-## Publicação
-
-O site é um conjunto de arquivos estáticos em `dist/`, publicado no ambiente oficial da CTI.
-Procedimento e variáveis de ambiente: [docs/publicacao.md](docs/publicacao.md).
-
-## Documentos do projeto
-
-- Carta de Serviços original (somente leitura): [docs/fonte/carta-servicos-original.md](docs/fonte/carta-servicos-original.md)
-- Princípios do projeto: [.specify/memory/constitution.md](.specify/memory/constitution.md)
-- Especificação, plano e tarefas: [specs/001-site-institucional-egp/](specs/001-site-institucional-egp/)
+- Confirmar o telefone de atendimento, hoje desabilitado em `src/data/contatos.yaml`
+- Definir com a CTI o domínio institucional e migrar a hospedagem
+- Substituir a paleta provisória pelos valores do manual de identidade do Ifes
