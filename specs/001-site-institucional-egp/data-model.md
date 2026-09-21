@@ -48,8 +48,7 @@ Os quatro fluxos da seção 5 da Carta.
 | `soWhat` | string | sim | conteúdo da camada "So What?"; não vazio |
 | corpo Markdown | texto | sim | descrição do fluxo |
 
-**Regras**: exatamente 4 registros; `numero` de 1 a 4 sem repetição. A "Regra de Ouro" não é um
-fluxo — vive em `institucional.regraDeOuro` e é exibida em destaque na página de fluxos.
+**Regras**: exatamente 4 registros; `numero` de 1 a 4 sem repetição.
 
 ### Unidade do Ecossistema (`ecossistema`)
 
@@ -125,7 +124,6 @@ Registro único com os dados transversais da Carta (seções 1 e 2).
 | `vinculo` | string | sim | "Diretoria de Pesquisa, Pós-Graduação e Extensão (DPPGE)" |
 | `missao` | string | sim | texto literal da missão |
 | `identidades` | lista de string | sim | "Motor Tático", "Engrenagem de Maturidade Institucional" |
-| `regraDeOuro` | string | sim | texto da Regra de Ouro |
 | `ctaNav` | string | sim | rótulo do botão de ação da navegação |
 | `chamadaTitulo` | string | sim | título da faixa de chamada final |
 | `chamadaTexto` | string | sim | texto da faixa de chamada final |

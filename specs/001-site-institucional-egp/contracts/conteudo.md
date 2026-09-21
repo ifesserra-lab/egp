@@ -96,7 +96,7 @@ arquivo muda URL, portanto é mudança de contrato.
 ### Registro único em YAML (`institucional`)
 
 Um objeto com os campos descritos no modelo de dados (missão, vínculo, portaria, identidades,
-Regra de Ouro, `atualizadoEm`).
+`atualizadoEm`).
 
 ## Regras de validação exigidas
 

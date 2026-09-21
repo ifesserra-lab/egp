@@ -54,9 +54,6 @@ um coordenador que classifique cinco demandas fictícias entre "EGP" e "minha re
    setores, com os quatro pares de itens da Carta.
 2. **Given** um coordenador na página de Fluxos Operacionais, **When** percorre a página,
    **Then** encontra os quatro fluxos, cada um com sua descrição e sua camada "So What?".
-3. **Given** um coordenador que pretende solicitar compra ou remanejamento, **When** acessa os
-   Fluxos Operacionais, **Then** encontra a "Regra de Ouro" em destaque, indicando análise prévia
-   obrigatória do EGP.
 
 ---
 
@@ -154,7 +151,7 @@ site publicado.
 - **FR-005**: A seção de serviços MUST apresentar os quatro pilares, cada um com objetivo,
   atividades e entregáveis.
 - **FR-006**: A seção de fluxos operacionais MUST apresentar os quatro fluxos, cada um com sua
-  camada "So What?", e destacar a "Regra de Ouro" de análise prévia obrigatória.
+  camada "So What?".
 - **FR-007**: A seção de limites de atuação MUST apresentar, em formato comparativo, as
   atribuições do EGP e as responsabilidades do coordenador e dos setores.
 - **FR-008**: A seção de ecossistema MUST descrever o Parque de Inovação Alvo Serra, o Núcleo
@@ -244,6 +241,8 @@ site publicado.
 - O site é monolíngue (pt-BR). Versão em outro idioma está fora do escopo desta entrega.
 - Identidade visual segue o manual do Ifes; logotipos e marcas institucionais serão fornecidos pelo
   EGP e não serão recriados.
+- A "Regra de Ouro" (análise prévia obrigatória de compras e remanejamentos) não é publicada no
+  site, por decisão do EGP em 2026-09-21; permanece no documento-fonte.
 - O site é uma página única com âncoras por seção, por decisão do EGP em 2026-09-21; a estrutura
   anterior, de uma rota por seção, foi descontinuada e aqueles endereços não respondem mais.
 - Ferramentas internas de trabalho da equipe (como o quadro de gestão de fluxos) não são citadas

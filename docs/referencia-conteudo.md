@@ -31,7 +31,6 @@ Arquivo `src/data/institucional.yaml`, registro único sob a chave `egp`.
 | `vinculo` | texto | sim | Unidade à qual o EGP é vinculado |
 | `missao` | texto | sim | Texto da missão, exibido na página inicial |
 | `identidades` | lista de texto | sim | Identidades institucionais exibidas como etiquetas |
-| `regraDeOuro` | texto | sim | Texto destacado no topo da seção de Fluxos |
 | `ctaNav` | texto | sim | Rótulo do botão de ação na navegação |
 | `chamadaTitulo` | texto | sim | Título da faixa de chamada antes do rodapé |
 | `chamadaTexto` | texto | sim | Texto da faixa de chamada antes do rodapé |
