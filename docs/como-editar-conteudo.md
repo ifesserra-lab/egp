@@ -17,7 +17,7 @@ Todos os campos, limites e mensagens de erro estão na
 ## Como acrescentar um pilar de serviço
 
 Crie um arquivo em `src/content/pilares/`. O nome do arquivo vira o endereço da âncora pública —
-`novo-pilar.md` responde em `/servicos#novo-pilar`, então use apenas letras minúsculas, números e
+`novo-pilar.md` responde em `/#novo-pilar`, então use apenas letras minúsculas, números e
 hífens.
 
 ```markdown
@@ -36,7 +36,7 @@ resumo: Frase curta exibida no cartão da página inicial.
 Parágrafo opcional de detalhamento.
 ```
 
-O pilar entra sozinho na página de Serviços e na página inicial, na posição indicada por `ordem`.
+O pilar entra sozinho na seção de Serviços, na posição indicada por `ordem`.
 
 ## Como acrescentar uma unidade do ecossistema
 

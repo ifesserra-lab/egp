@@ -7,7 +7,7 @@
 ## Summary
 
 Publicar a Carta de Serviços do EGP do Campus Serra como site institucional estático, com
-navegação por seção (serviços, fluxos, limites, ecossistema, contato). As seções de indicadores e
+página única com navegação por âncora (sobre, serviços, fluxos, limites, ecossistema, contato). As seções de indicadores e
 de cases da Carta, e a página que reunia o documento em leitura corrida, estão fora do escopo
 desta entrega, por decisão do EGP.
 
@@ -50,7 +50,7 @@ JavaScript desativado; <= 100 KB de CSS por página; layout utilizável a partir
 monolíngue pt-BR; `base` de publicação configurável, pois a URL final ainda não foi definida pela
 CTI
 
-**Scale/Scope**: 7 rotas, ~15 arquivos de conteúdo, tráfego institucional de baixo volume; equipe
+**Scale/Scope**: 1 rota pública mais a página de erro, ~15 arquivos de conteúdo, tráfego institucional de baixo volume; equipe
 de manutenção = servidores do EGP editando Markdown/YAML no repositório
 
 ## Constitution Check

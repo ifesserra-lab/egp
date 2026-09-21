@@ -14,7 +14,7 @@ nenhuma página incompleta é publicada.
 | Pilares de serviço | `src/content/pilares/*.md` | um arquivo por item | 4 |
 | Fluxos operacionais | `src/content/fluxos/*.md` | um arquivo por item | 4 |
 | Unidades do ecossistema | `src/content/ecossistema/*.md` | um arquivo por item | 3 |
-| Texto de abertura das páginas | `src/content/paginas/*.md` | um arquivo por rota | 7 |
+| Texto de abertura das seções | `src/content/paginas/*.md` | um arquivo por seção | 7 |
 
 Em arquivos Markdown, o nome do arquivo sem a extensão é o identificador do item e compõe a
 âncora pública da rota correspondente.
@@ -82,8 +82,8 @@ Arquivos em `src/content/paginas/`. O identificador do arquivo corresponde à ro
 | --- | --- | --- | --- |
 | `titulo` | texto | sim | Usado no `<h1>` e no título do navegador |
 | `descricao` | texto | sim | Entre 50 e 160 caracteres; usado na descrição para buscadores |
-| `rota` | texto | sim | Começa com `/` |
-| `ordemNav` | número inteiro | não | Posição no menu; ausente mantém a página fora do menu |
+| `rota` | texto | sim | Começa com `/` (página) ou `#` (âncora de seção) |
+| `ordemNav` | número inteiro | não | Posição no menu; ausente mantém a seção fora do menu |
 | `rotuloNav` | texto | não | Rótulo no menu; ausente usa `titulo` |
 | corpo | Markdown | sim | Texto de abertura |
 

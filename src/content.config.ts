@@ -50,7 +50,7 @@ const paginas = defineCollection({
     descricao: naoVazio('descricao')
       .min(50, 'descricao deve ter ao menos 50 caracteres (usada em <meta description>).')
       .max(160, 'descricao deve ter no máximo 160 caracteres.'),
-    rota: naoVazio('rota').regex(/^\//, 'rota deve começar com "/".'),
+    rota: naoVazio('rota').regex(/^[#/]/, 'rota deve começar com "/" ou "#".'),
     ordemNav: z.number().int().min(1).optional(),
     rotuloNav: z.string().trim().min(1).optional(),
   }),

@@ -1,34 +1,58 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import CartaoPilar from '../components/CartaoPilar.astro';
 import CanalAtendimento from '../components/CanalAtendimento.astro';
-import { comBase } from '../lib/url';
-
-const pagina = await getEntry('paginas', 'index');
-if (!pagina) throw new Error('Conteúdo "index" ausente em src/content/paginas/.');
-const { Content } = await render(pagina);
+import TabelaComparativa from '../components/TabelaComparativa.astro';
 
 const egp = await getEntry('institucional', 'egp');
 if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
 
+const pagina = async (id: string) => {
+  const entrada = await getEntry('paginas', id);
+  if (!entrada) throw new Error(`Conteúdo "${id}" ausente em src/content/paginas/.`);
+  return { data: entrada.data, ...(await render(entrada)) };
+};
+
+const inicio = await pagina('index');
+const sobre = await pagina('sobre');
+const servicos = await pagina('servicos');
+const fluxos = await pagina('fluxos');
+const limites = await pagina('limites');
+const ecossistema = await pagina('ecossistema');
+const contato = await pagina('contato');
+
 const pilares = (await getCollection('pilares')).sort((a, b) => a.data.ordem - b.data.ordem);
+const corposPilares = await Promise.all(pilares.map(async (p) => ({ item: p, ...(await render(p)) })));
+
+const listaFluxos = (await getCollection('fluxos')).sort((a, b) => a.data.numero - b.data.numero);
+const corposFluxos = await Promise.all(listaFluxos.map(async (f) => ({ item: f, ...(await render(f)) })));
+
+const unidades = (await getCollection('ecossistema')).sort((a, b) => a.data.ordem - b.data.ordem);
+const corposUnidades = await Promise.all(unidades.map(async (u) => ({ item: u, ...(await render(u)) })));
+
+const fronteiras = (await getCollection('fronteiras')).sort((a, b) => a.data.ordem - b.data.ordem);
 const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const numeros = [
+  { valor: 'Custo zero', rotulo: 'Para o orçamento regular do campus' },
+  { valor: egp.data.cargaHoraria, rotulo: `Atuação conforme a ${egp.data.portaria}` },
+  { valor: 'Protagonismo TA', rotulo: 'Técnicos administrativos como coordenadores' },
+];
 ---
 
-<Base titulo={pagina.data.titulo} descricao={pagina.data.descricao} rotaAtual="/">
+<Base titulo={inicio.data.titulo} descricao={inicio.data.descricao}>
   <section class="hero">
     <div class="env hero__grade">
       <div>
         <p class="etiqueta">{egp.data.vinculo} · {egp.data.portaria}</p>
-        <h1>Segurança jurídica e administrativa para os projetos do {egp.data.campus.split('·').pop()?.trim()}</h1>
-        <div class="prosa"><Content /></div>
+        <h1>Segurança jurídica e administrativa para os projetos do Campus Serra</h1>
+        <div class="prosa"><inicio.Content /></div>
         <ul class="apelidos">
           {egp.data.identidades.map((identidade) => <li>{identidade}</li>)}
         </ul>
         <div class="botoes">
-          <a class="btn btn--primario" href={comBase('/servicos')}>Ver os serviços</a>
-          <a class="btn btn--secundario" href={comBase('/contato')}>Falar com o EGP</a>
+          <a class="btn btn--primario" href="#servicos">Ver os serviços</a>
+          <a class="btn btn--secundario" href="#contato">Falar com o EGP</a>
         </div>
       </div>
       <div class="missao">
@@ -38,41 +62,137 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     </div>
   </section>
 
-  <section class="secao" aria-labelledby="pilares">
+  <section class="secao" id="sobre" aria-labelledby="t-sobre">
     <div class="env">
-      <h2 id="pilares">Serviços</h2>
+      <h2 id="t-sobre">{sobre.data.titulo}</h2>
+      <div class="prosa"><sobre.Content /></div>
+
+      <h3>Modelo operacional e sustentabilidade</h3>
       <p class="prosa">
-        Quatro pilares de atuação para garantir a governança institucional dos projetos de
-        pesquisa, extensão e inovação.
+        Diante de um severo cenário de restrição fiscal e da escassez de recursos orçamentários
+        ordinários para investimento, o EGP viabiliza a modernização do campus por meio de um
+        modelo de custeio autossustentável. A manutenção da unidade (Opex/Custeio) é financiada
+        via recursos de projetos aprovados (bolsas de apoio e taxas de custos indiretos),
+        resultando em custo zero para o orçamento regular.
       </p>
-      <div class="grade" style="margin-top: var(--esp-4)">
-        {
-          pilares.map((pilar) => (
-            <CartaoPilar
-              nome={pilar.data.nome}
-              resumo={pilar.data.resumo}
-              ordem={pilar.data.ordem}
-              href={comBase(`/servicos#${pilar.id}`)}
-            />
-          ))
-        }
+
+      <div class="numeros">
+        {numeros.map((n) => (
+          <div class="numero">
+            <b>{n.valor}</b>
+            <span>{n.rotulo}</span>
+          </div>
+        ))}
+      </div>
+
+      <p class="prosa">
+        Estrategicamente, o EGP fomenta o protagonismo dos Técnicos Administrativos (TAs) como
+        coordenadores. Ao empoderar os TAs para liderarem a execução gestora, o campus dobra sua
+        capacidade operacional, profissionalizando o manejo do portfólio de projetos do campus.
+      </p>
+    </div>
+  </section>
+
+  <section class="secao" id="servicos" aria-labelledby="t-servicos">
+    <div class="env">
+      <h2 id="t-servicos">{servicos.data.titulo}</h2>
+      <div class="prosa"><servicos.Content /></div>
+
+      <div class="pilares">
+        {corposPilares.map(({ item, Content }) => (
+          <article class="pilar" id={item.id}>
+            <p class="etiqueta">Pilar {String(item.data.ordem).padStart(2, '0')}</p>
+            <h3>{item.data.nome}</h3>
+            <p class="pilar__objetivo">{item.data.objetivo}</p>
+            <div class="prosa"><Content /></div>
+            <div class="pilar__listas">
+              <div>
+                <h4>Atividades</h4>
+                <ul>{item.data.atividades.map((a) => <li>{a}</li>)}</ul>
+              </div>
+              <div>
+                <h4>Entregáveis</h4>
+                <ul>{item.data.entregaveis.map((e) => <li>{e}</li>)}</ul>
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="secao" aria-labelledby="canais">
+  <section class="secao" id="fluxos" aria-labelledby="t-fluxos">
     <div class="env">
-      <h2 id="canais">Como acionar o EGP</h2>
+      <h2 id="t-fluxos">{fluxos.data.titulo}</h2>
+      <div class="prosa"><fluxos.Content /></div>
+
+      <div class="aviso regra">
+        <span class="regra__selo">Regra de Ouro</span>
+        <p>{egp.data.regraDeOuro}</p>
+      </div>
+
+      <div class="grade">
+        {corposFluxos.map(({ item, Content }) => (
+          <article class="cartao fluxo" id={item.id}>
+            <span class="fluxo__n">Fluxo {String(item.data.numero).padStart(2, '0')}</span>
+            <h3>{item.data.nome}</h3>
+            <div class="prosa"><Content /></div>
+            <p class="sowhat">
+              <strong>So what?</strong>
+              {item.data.soWhat}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="limites" aria-labelledby="t-limites">
+    <div class="env pilha">
+      <h2 id="t-limites">{limites.data.titulo}</h2>
+      <div class="prosa"><limites.Content /></div>
+      <TabelaComparativa
+        legenda="Fronteiras de responsabilidade entre o EGP e os coordenadores e setores."
+        rotuloRegiao="Tabela de fronteiras de responsabilidade"
+        linhas={fronteiras.map((f) => ({ id: f.id, egp: f.data.egp, coordenador: f.data.coordenador }))}
+      />
+    </div>
+  </section>
+
+  <section class="secao" id="ecossistema" aria-labelledby="t-ecossistema">
+    <div class="env">
+      <h2 id="t-ecossistema">{ecossistema.data.titulo}</h2>
+      <div class="prosa"><ecossistema.Content /></div>
+
+      <div class="grade" style="margin-top: var(--esp-4)">
+        {corposUnidades.map(({ item, Content }) => (
+          <article class="cartao" id={item.id}>
+            <h3>{item.data.nome}</h3>
+            <p class="papel">{item.data.papel}</p>
+            <dl>
+              <dt>Relação com o EGP</dt>
+              <dd>{item.data.relacaoComEgp}</dd>
+            </dl>
+            <div class="prosa"><Content /></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="contato" aria-labelledby="t-contato">
+    <div class="env">
+      <h2 id="t-contato">{contato.data.titulo}</h2>
+      <div class="prosa"><contato.Content /></div>
       <ul class="canais">
-        {canais.map((canal) => <CanalAtendimento canal={canal.data} />)}
+        {canais.map((canal) => <CanalAtendimento canal={canal.data} nivel={3} />)}
       </ul>
+      <p class="prosa endereco">{egp.data.nomeUnidade}</p>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Fundo sólido (e não gradiente) para que o contraste do texto seja verificável
-     por ferramentas automatizadas — constituição, princípio III. */
   .hero {
     background: var(--marca-suave);
     border-bottom: 1px solid var(--linha);
@@ -141,6 +261,158 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     color: var(--marca-forte);
   }
 
+  .secao h3 {
+    margin-top: var(--esp-3);
+  }
+
+  .numeros {
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    margin-block: var(--esp-3);
+  }
+
+  .numero {
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-radius: var(--r);
+    padding: var(--esp-3);
+  }
+
+  .numero b {
+    display: block;
+    font-size: 1.75rem;
+    color: var(--marca-forte);
+    line-height: 1.1;
+  }
+
+  .numero span {
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  .pilares {
+    display: grid;
+    gap: var(--esp-3);
+    margin-top: var(--esp-4);
+  }
+
+  .pilar {
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-radius: var(--r);
+    padding: var(--esp-4);
+  }
+
+  .pilar h3 {
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .pilar__objetivo {
+    margin: 0;
+  }
+
+  .pilar__listas {
+    display: grid;
+    gap: var(--esp-3);
+    margin-top: var(--esp-3);
+    padding-top: var(--esp-3);
+    border-top: 1px solid var(--linha);
+  }
+
+  @media (min-width: 46rem) {
+    .pilar__listas {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .pilar__listas h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    margin: 0 0 0.35rem;
+  }
+
+  .pilar__listas ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  .pilar__listas li + li {
+    margin-top: 0.35rem;
+  }
+
+  .regra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-2);
+    align-items: baseline;
+    margin-block: var(--esp-4);
+  }
+
+  .regra p {
+    margin: 0;
+    flex: 1 1 20rem;
+  }
+
+  .regra__selo {
+    font-weight: 700;
+    color: var(--destaque);
+    white-space: nowrap;
+  }
+
+  .fluxo__n {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--marca);
+    letter-spacing: 0.1em;
+    display: block;
+  }
+
+  .fluxo h3 {
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  .sowhat {
+    background: var(--marca-suave);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  .sowhat strong {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+  }
+
+  .papel {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 0.9688rem;
+  }
+
+  dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+  }
+
   .canais {
     list-style: none;
     margin: var(--esp-3) 0 0;
@@ -148,5 +420,11 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     display: grid;
     gap: var(--esp-2);
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+
+  .endereco {
+    margin-top: var(--esp-3);
+    font-weight: 600;
+    color: var(--texto);
   }
 </style>

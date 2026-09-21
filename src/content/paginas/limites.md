@@ -1,7 +1,7 @@
 ---
 titulo: Limites de Atuação
 descricao: Fronteiras de responsabilidade entre o EGP e os coordenadores e setores finalísticos do Campus Serra.
-rota: /limites
+rota: "#limites"
 ordemNav: 5
 rotuloNav: Limites
 ---

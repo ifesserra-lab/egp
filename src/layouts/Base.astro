@@ -10,22 +10,27 @@ import '../styles/print.css';
 interface Props {
   titulo: string;
   descricao: string;
-  rotaAtual: string;
 }
 
-const { titulo, descricao, rotaAtual } = Astro.props;
+const { titulo, descricao } = Astro.props;
 
 const egp = await getEntry('institucional', 'egp');
 if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
 
 const paginas = await getCollection('paginas');
 const itensNav = paginas
-  .filter((p) => p.data.ordemNav !== undefined)
+  .filter((p) => p.data.ordemNav !== undefined && p.data.rota !== '/')
   .sort((a, b) => (a.data.ordemNav ?? 0) - (b.data.ordemNav ?? 0))
   .map((p) => ({
     rota: p.data.rota,
     rotulo: p.data.rotuloNav ?? p.data.titulo,
   }));
+
+// Evita repetir o nome da unidade quando o título da página já é o nome dela.
+const tituloCompleto =
+  titulo === egp.data.nomeCurto
+    ? `${titulo} — ${egp.data.campus}`
+    : `${titulo} · ${egp.data.nomeCurto} — ${egp.data.campus}`;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -35,7 +40,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titulo} · {egp.data.nomeCurto} — {egp.data.campus}</title>
+    <title>{tituloCompleto}</title>
     <meta name="description" content={descricao} />
     <link rel="canonical" href={canonical.href} />
     <meta property="og:title" content={`${titulo} · ${egp.data.nomeCurto}`} />
@@ -56,7 +61,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
             <span class="marca__sub">{egp.data.campus}</span>
           </span>
         </a>
-        <NavPrincipal itens={itensNav} rotaAtual={rotaAtual} />
+        <NavPrincipal itens={itensNav} />
       </div>
     </header>
 

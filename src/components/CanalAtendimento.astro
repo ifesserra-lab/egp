@@ -14,9 +14,12 @@ interface Canal {
 interface Props {
   canal: Canal;
   compacto?: boolean;
+  /** Nível do título do canal, para manter a hierarquia de headings da página. */
+  nivel?: 3 | 4;
 }
 
-const { canal, compacto = false } = Astro.props;
+const { canal, compacto = false, nivel = 3 } = Astro.props;
+const Titulo = `h${nivel}` as 'h3' | 'h4';
 /** Telefone vira link `tel:` com o país e só os dígitos; o texto exibido mantém a formatação. */
 const somenteDigitos = (valor: string) => valor.replace(/\D/g, '');
 
@@ -28,7 +31,7 @@ if (canal.endereco) {
 ---
 
 <li class:list={['canal', compacto && 'canal--compacto']}>
-  <h3>{canal.rotulo}</h3>
+  <Titulo>{canal.rotulo}</Titulo>
   {
     canal.situacao === 'ativo' ? (
       <>
@@ -61,7 +64,8 @@ if (canal.endereco) {
     border: none;
   }
 
-  h3 {
+  h3,
+  h4 {
     margin: 0 0 0.35rem;
     font-size: 1rem;
     color: var(--texto);
