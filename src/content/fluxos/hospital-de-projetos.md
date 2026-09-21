@@ -1,7 +1,7 @@
 ---
 nome: Hospital de Projetos (Captação Reativa)
 numero: 1
-soWhat: >-
+naPratica: >-
   Reduz a resistência docente à captação de recursos ao transmutar a burocracia em suporte de
   segurança jurídica.
 ---

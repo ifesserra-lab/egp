@@ -53,7 +53,7 @@ um coordenador que classifique cinco demandas fictícias entre "EGP" e "minha re
    **Then** vê lado a lado as atribuições do EGP e as responsabilidades do coordenador e dos
    setores, com os quatro pares de itens da Carta.
 2. **Given** um coordenador na página de Fluxos Operacionais, **When** percorre a página,
-   **Then** encontra os quatro fluxos, cada um com sua descrição e sua camada "So What?".
+   **Then** encontra os quatro fluxos, cada um com sua descrição e sua bloco "Na prática".
 
 ---
 
@@ -151,7 +151,7 @@ site publicado.
 - **FR-005**: A seção de serviços MUST apresentar os quatro pilares, cada um com objetivo,
   atividades e entregáveis.
 - **FR-006**: A seção de fluxos operacionais MUST apresentar os quatro fluxos, cada um com sua
-  camada "So What?".
+  bloco "Na prática".
 - **FR-007**: A seção de limites de atuação MUST apresentar, em formato comparativo, as
   atribuições do EGP e as responsabilidades do coordenador e dos setores.
 - **FR-008**: A seção de ecossistema MUST descrever o Parque de Inovação Alvo Serra, o Núcleo
@@ -198,7 +198,7 @@ site publicado.
 - **Pilar de Serviço**: uma das quatro frentes de oferta do EGP. Atributos: nome, objetivo,
   atividades, entregáveis, ordem de exibição.
 - **Fluxo Operacional**: procedimento aplicado pelo EGP. Atributos: número, nome, descrição,
-  camada "So What?".
+  bloco "Na prática".
 - **Fronteira de Responsabilidade**: par comparativo. Atributos: atribuição do EGP,
   responsabilidade correspondente do coordenador ou setor.
 - **Unidade do Ecossistema**: parceiro institucional de inovação. Atributos: nome, papel, relação

@@ -1,7 +1,7 @@
 ---
 nome: Check-in de Infraestrutura e Fim do "Shadow IT"
 numero: 3
-soWhat: >-
+naPratica: >-
   Extingue servidores locais vulneráveis e garante a segurança cibernética dos dados
   institucionais.
 ---

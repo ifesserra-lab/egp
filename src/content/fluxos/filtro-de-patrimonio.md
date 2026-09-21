@@ -1,7 +1,7 @@
 ---
 nome: Filtro de Patrimônio e Ganho de Escala
 numero: 4
-soWhat: >-
+naPratica: >-
   Maximiza o poder de compra e transforma a execução financeira em um ativo logístico estratégico.
 ---
 

@@ -8,4 +8,4 @@ rotuloNav: Como funciona
 ---
 
 O EGP aplica o princípio de *tailoring* para adaptar processos às necessidades reais de cada
-projeto. Cada fluxo traz a camada "So What?", que explica o efeito prático da escolha.
+projeto. Cada fluxo traz o bloco "Na prática", que explica o efeito concreto da escolha.

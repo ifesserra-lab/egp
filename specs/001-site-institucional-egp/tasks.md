@@ -41,14 +41,14 @@ de build exigidos pela constituição (`astro check`, validação Zod no build, 
 
 - [X] T007 Criar `src/content.config.ts` definindo as 7 collections com loaders `glob` (pilares, fluxos, ecossistema, paginas) e `file` (fronteiras, contatos, institucional), importando `glob`/`file` de `astro/loaders` e `z` de `astro/zod`, conforme `contracts/conteudo.md`
 - [X] T008 Implementar em `src/content.config.ts` o schema `pilares` — `nome` string não vazia, `ordem` inteiro 1–4 único, `objetivo` string não vazia, `atividades` array com mínimo 1 item, `entregaveis` array com mínimo 1 item, `resumo` string de no máximo 160 caracteres
-- [X] T009 Implementar em `src/content.config.ts` os schemas `fluxos` (`numero` inteiro 1–4 único, `nome`, `soWhat` obrigatório e não vazio, corpo Markdown obrigatório) e `ecossistema` (`nome`, `ordem` único, `papel`, `relacaoComEgp`)
+- [X] T009 Implementar em `src/content.config.ts` os schemas `fluxos` (`numero` inteiro 1–4 único, `nome`, `naPratica` obrigatório e não vazio, corpo Markdown obrigatório) e `ecossistema` (`nome`, `ordem` único, `papel`, `relacaoComEgp`)
 - [X] T010 Implementar em `src/content.config.ts` o schema `paginas` — `titulo` obrigatório, `descricao` entre 50 e 160 caracteres, `ordemNav` inteiro opcional e único, corpo Markdown obrigatório
 - [X] T011 Implementar em `src/content.config.ts` o schema `fronteiras` (`id`, `ordem` único, `egp` e `coordenador` ambos obrigatórios)
 - [X] T012 Implementar em `src/content.config.ts` o schema `contatos` com enum `tipo` (`email` | `telefone` | `site` | `ferramenta`), enum `situacao` (`ativo` | `pendente`) e os dois `refine` de validação cruzada: `situacao: ativo` exige `endereco` e proíbe omissão; `situacao: pendente` proíbe `endereco` e exige `avisoPendencia` (FR-012, princípio V)
 - [X] T013 Implementar em `src/content.config.ts` o schema `institucional` — `nomeUnidade`, `vinculo`, `portaria`, `cargaHoraria`, `missao`, `identidades` (array de string), `regraDeOuro`, `atualizadoEm` data ISO obrigatória
 - [X] T014 Migrar as seções 1 e 2 da Carta para `src/data/institucional.yaml` (missão literal, DPPGE, Portaria nº 190/2026, 4h semanais, "Motor Tático" e "Engrenagem de Maturidade Institucional", Regra de Ouro, `atualizadoEm`), transcrevendo sem paráfrase (FR-002)
 - [X] T015 [P] Migrar a seção 4 da Carta para 4 arquivos em `src/content/pilares/` (padronizacao-e-metodologia, triagem-e-captacao, gestao-de-portfolio, apoio-e-fundacoes) com objetivo, atividades e entregáveis literais
-- [X] T016 [P] Migrar a seção 5 da Carta para 4 arquivos em `src/content/fluxos/` (hospital-de-projetos, lista-de-desejos-estrategica, check-in-de-infraestrutura, filtro-de-patrimonio) com a camada "So What?" em campo próprio
+- [X] T016 [P] Migrar a seção 5 da Carta para 4 arquivos em `src/content/fluxos/` (hospital-de-projetos, lista-de-desejos-estrategica, check-in-de-infraestrutura, filtro-de-patrimonio) com a bloco "Na prática" em campo próprio
 - [X] T017 [P] Migrar a seção 3 da Carta para `src/data/fronteiras.yaml` com os 4 pares EGP × Coordenador/Setores
 - [X] T018 [P] Migrar a seção 6 da Carta para 3 arquivos em `src/content/ecossistema/` (parque-alvo-serra, nucleo-incubador, divisao-egp-agifes)
 - [X] T019 [P] Criar `src/data/contatos.yaml` com os canais oficiais; canal `ativo` exige `endereco` e canal `pendente` exige `avisoPendencia` sem endereço (FR-012)
@@ -92,7 +92,7 @@ de build exigidos pela constituição (`astro check`, validação Zod no build, 
 - [X] T035 [P] [US2] Criar textos de abertura em `src/content/paginas/` para `fluxos` e `limites`, com `titulo`, `descricao` e `ordemNav`
 - [X] T036 [P] [US2] Criar `src/components/TabelaComparativa.astro` com `<caption>`, `<th scope="col">`, rolagem interna do bloco com `tabindex="0"` e rótulo acessível (FR-007, FR-019, FR-021)
 - [X] T037 [US2] Criar `src/pages/limites.astro` renderizando os 4 pares de `fronteiras` pela `TabelaComparativa` (FR-007)
-- [X] T038 [US2] Criar `src/pages/fluxos.astro` listando os 4 fluxos por `numero`, cada um com corpo e camada "So What?" visualmente distinta e âncora estável (FR-006)
+- [X] T038 [US2] Criar `src/pages/fluxos.astro` listando os 4 fluxos por `numero`, cada um com corpo e bloco "Na prática" visualmente distinta e âncora estável (FR-006)
 - [X] T039 [US2] Exibir a Regra de Ouro em destaque no topo de `src/pages/fluxos.astro`, a partir de `institucional.regraDeOuro` (FR-006)
 
 **Checkpoint**: Visitante consegue se autoclassificar antes de abrir demanda

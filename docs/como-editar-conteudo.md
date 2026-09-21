@@ -61,7 +61,7 @@ Crie ou edite um arquivo em `src/content/fluxos/`:
 ---
 nome: Nome do fluxo
 numero: 5
-soWhat: O efeito prático do fluxo — a camada "So What?".
+naPratica: O efeito prático do fluxo — a bloco "Na prática".
 ---
 
 Descrição do fluxo.
