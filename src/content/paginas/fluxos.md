@@ -1,7 +1,7 @@
 ---
 titulo: Fluxos Operacionais
 descricao: Como o EGP conduz captação, alinhamento ao PDI, validação de infraestrutura e compras em escala no Campus Serra.
-rota: /fluxos
+rota: "#fluxos"
 ordemNav: 4
 rotuloNav: Fluxos
 ---

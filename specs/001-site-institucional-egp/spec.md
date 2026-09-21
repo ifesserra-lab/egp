@@ -167,11 +167,9 @@ site publicado.
 
 **Navegação e uso**
 
-- **FR-015**: Toda página MUST ser alcançável a partir da navegação principal em, no máximo, dois
-  cliques a partir da página inicial.
-- **FR-016**: Toda página MUST indicar ao visitante onde ele está dentro do site e oferecer
-  caminho de volta para a página inicial.
-- **FR-017**: O site MUST oferecer endereços estáveis e legíveis por seção, de modo que qualquer
+- **FR-015**: Toda seção MUST ser alcançável em um clique a partir da navegação principal.
+- **FR-016**: O site MUST oferecer caminho de volta ao início a partir da página de erro.
+- **FR-017**: O site MUST oferecer âncoras estáveis e legíveis por seção, de modo que qualquer
   seção possa ser citada em ofício, e-mail ou apresentação.
 - **FR-018**: O site MUST estar integralmente em português do Brasil, incluindo títulos,
   descrições e textos alternativos.
@@ -246,6 +244,8 @@ site publicado.
 - O site é monolíngue (pt-BR). Versão em outro idioma está fora do escopo desta entrega.
 - Identidade visual segue o manual do Ifes; logotipos e marcas institucionais serão fornecidos pelo
   EGP e não serão recriados.
+- O site é uma página única com âncoras por seção, por decisão do EGP em 2026-09-21; a estrutura
+  anterior, de uma rota por seção, foi descontinuada e aqueles endereços não respondem mais.
 - Ferramentas internas de trabalho da equipe (como o quadro de gestão de fluxos) não são citadas
   no site, por decisão do EGP em 2026-09-21.
 - Dashboards Horizon e Nexo são sistemas próprios citados como entregáveis; a exibição dos dados

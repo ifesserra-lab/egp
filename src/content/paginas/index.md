@@ -1,7 +1,7 @@
 ---
 titulo: Escritório de Gestão de Projetos
 descricao: Suporte tático e segurança jurídica para os projetos de pesquisa, extensão e inovação do Campus Serra do Ifes.
-rota: /
+rota: "/"
 ordemNav: 1
 rotuloNav: Início
 ---

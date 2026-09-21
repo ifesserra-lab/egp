@@ -30,7 +30,7 @@ npm run verify       # check + build + a11y + links + perf (gate completo)
 ## Cenário 1 — Conteúdo completo e fiel (SC-001, FR-001, FR-002)
 
 1. `npm run build`
-2. `npm run preview` e percorrer as 7 rotas do contrato.
+2. `npm run preview` e percorrer as seções da página única.
 3. Conferir item a item contra `docs/fonte/carta-servicos-original.md`.
 
 **Esperado**: as seções da Carta dentro do escopo estão publicadas (todas exceto indicadores e
@@ -42,8 +42,8 @@ Portaria nº 190/2026 conferem; a cifra do portfólio não aparece em nenhuma ro
 
 1. Abrir `/` e, sem usar busca, chegar a "o que o EGP faz" e "como acionar".
 
-**Esperado**: os quatro pilares aparecem na Home; a página de Contato está a um clique da navegação
-principal em qualquer rota; nenhum caminho exige mais de 2 cliques a partir da Home.
+**Esperado**: os quatro pilares aparecem na página; a seção de contato está a um clique da
+navegação principal.
 
 ## Cenário 3 — Canais pendentes sem endereço inventado (FR-012, princípio V)
 

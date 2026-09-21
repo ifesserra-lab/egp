@@ -3,10 +3,9 @@ import { comBase } from '../lib/url';
 
 interface Props {
   itens: Array<{ rota: string; rotulo: string }>;
-  rotaAtual: string;
 }
 
-const { itens, rotaAtual } = Astro.props;
+const { itens } = Astro.props;
 ---
 
 <nav aria-label="Navegação principal">
@@ -14,9 +13,7 @@ const { itens, rotaAtual } = Astro.props;
     {
       itens.map((item) => (
         <li>
-          <a href={comBase(item.rota)} aria-current={item.rota === rotaAtual ? 'page' : undefined}>
-            {item.rotulo}
-          </a>
+          <a href={item.rota.startsWith('#') ? item.rota : comBase(item.rota)}>{item.rotulo}</a>
         </li>
       ))
     }
@@ -47,9 +44,4 @@ const { itens, rotaAtual } = Astro.props;
     border-bottom-color: var(--marca);
   }
 
-  a[aria-current='page'] {
-    color: var(--marca-forte);
-    border-bottom-color: var(--marca);
-    font-weight: 600;
-  }
 </style>

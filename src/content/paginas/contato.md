@@ -1,7 +1,7 @@
 ---
 titulo: Contato
 descricao: Canais oficiais de atendimento do Escritório de Gestão de Projetos do Campus Serra e situação de cada canal.
-rota: /contato
+rota: "#contato"
 ordemNav: 7
 rotuloNav: Contato
 ---

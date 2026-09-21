@@ -32,17 +32,22 @@ No workflow de publicação, valem `https://ifesserra-lab.github.io` e `/egp`.
 
 | Rota | Conteúdo |
 | --- | --- |
-| `/` | Missão, identidades institucionais, cartões dos pilares e canais |
-| `/sobre` | Apresentação, vínculo, portaria e modelo operacional |
-| `/servicos` | Os quatro pilares, com objetivo, atividades e entregáveis |
-| `/fluxos` | Regra de Ouro e os quatro fluxos, com a camada "So What?" |
-| `/limites` | Tabela comparativa de fronteiras de responsabilidade |
-| `/ecossistema` | Parque Alvo Serra, Núcleo Incubador e divisão EGP/Agifes |
-| `/contato` | Canais oficiais e sua situação |
+| `/` | Página única com todas as seções publicadas da Carta |
 | `/404` | Página de endereço não encontrado |
 
-Âncoras seguem o identificador do item: `/servicos#gestao-de-portfolio`,
-`/fluxos#hospital-de-projetos`, `/ecossistema#nucleo-incubador`.
+## Âncoras das seções
+
+| Âncora | Seção |
+| --- | --- |
+| `/#sobre` | Apresentação e modelo operacional |
+| `/#servicos` | Os quatro pilares |
+| `/#fluxos` | Regra de Ouro e os quatro fluxos |
+| `/#limites` | Tabela de fronteiras de responsabilidade |
+| `/#ecossistema` | Unidades de inovação |
+| `/#contato` | Canais oficiais |
+
+Âncoras de item seguem o identificador do arquivo de conteúdo: `/#gestao-de-portfolio`,
+`/#hospital-de-projetos`, `/#nucleo-incubador`.
 
 ## Estrutura de pastas
 

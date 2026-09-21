@@ -14,12 +14,6 @@
     }
   },
   "urls": [
-    "http://localhost:4321/",
-    "http://localhost:4321/sobre",
-    "http://localhost:4321/servicos",
-    "http://localhost:4321/fluxos",
-    "http://localhost:4321/limites",
-    "http://localhost:4321/ecossistema",
-    "http://localhost:4321/contato"
+    "http://localhost:4321/"
   ]
 }
