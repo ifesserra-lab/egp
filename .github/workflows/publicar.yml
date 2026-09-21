@@ -40,15 +40,10 @@ jobs:
       - name: Construir site estático
         run: npm run build
 
-      # `astro preview` roda como daemon: sem redirecionar a saída, o processo
-      # mantém o step aberto indefinidamente. Daí o redirecionamento e o stop.
-      - name: Verificar links internos
-        timeout-minutes: 5
-        run: |
-          npx astro preview > /tmp/preview.log 2>&1
-          npx wait-on "http://localhost:4321${SITE_BASE}" --timeout 60000
-          npx linkinator "http://localhost:4321${SITE_BASE}" --recurse --skip "^https?://(?!localhost)"
-          npx astro preview stop
+      # A verificação de links (linkinator) e a de acessibilidade (pa11y-ci)
+      # exigem o site servido e rodam localmente via `npm run verify`, antes
+      # do merge. Aqui ficam apenas os gates que não precisam de servidor:
+      # validação de conteúdo e tipos (astro check) e o build de produção.
 
       - uses: actions/upload-pages-artifact@v3
         with:
