@@ -61,7 +61,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
             <span class="marca__sub">{egp.data.campus}</span>
           </span>
         </a>
-        <NavPrincipal itens={itensNav} />
+        <NavPrincipal itens={itensNav} cta={{ rota: '#contato', rotulo: egp.data.ctaNav }} />
       </div>
     </header>
 

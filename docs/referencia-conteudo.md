@@ -34,7 +34,10 @@ Arquivo `src/data/institucional.yaml`, registro único sob a chave `egp`.
 | `cargaHoraria` | texto | sim | Carga horária prevista na portaria |
 | `missao` | texto | sim | Texto da missão, exibido na página inicial |
 | `identidades` | lista de texto | sim | Identidades institucionais exibidas como etiquetas |
-| `regraDeOuro` | texto | sim | Texto destacado no topo da página de Fluxos |
+| `regraDeOuro` | texto | sim | Texto destacado no topo da seção de Fluxos |
+| `ctaNav` | texto | sim | Rótulo do botão de ação na navegação |
+| `chamadaTitulo` | texto | sim | Título da faixa de chamada antes do rodapé |
+| `chamadaTexto` | texto | sim | Texto da faixa de chamada antes do rodapé |
 | `atualizadoEm` | data `AAAA-MM-DD` | sim | Data da última revisão, exibida no rodapé |
 
 ## Pilares de serviço
@@ -83,6 +86,8 @@ Arquivos em `src/content/paginas/`. O identificador do arquivo corresponde à ro
 | `titulo` | texto | sim | Usado no `<h1>` e no título do navegador |
 | `descricao` | texto | sim | Entre 50 e 160 caracteres; usado na descrição para buscadores |
 | `rota` | texto | sim | Começa com `/` (página) ou `#` (âncora de seção) |
+| `manchete` | texto | não | Título de destaque da seção inicial; ausente usa `titulo` |
+| `chamadaSecao` | texto | não | Título editorial da seção; ausente usa `titulo` |
 | `ordemNav` | número inteiro | não | Posição no menu; ausente mantém a seção fora do menu |
 | `rotuloNav` | texto | não | Rótulo no menu; ausente usa `titulo` |
 | corpo | Markdown | sim | Texto de abertura |

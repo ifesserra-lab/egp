@@ -2,7 +2,8 @@
 titulo: Serviços
 descricao: Os quatro pilares de atuação do EGP, com objetivo, atividades e entregáveis de cada frente de serviço.
 rota: "#servicos"
-ordemNav: 3
+chamadaSecao: Quatro frentes de apoio ao seu projeto
+ordemNav: 1
 rotuloNav: Serviços
 ---
 

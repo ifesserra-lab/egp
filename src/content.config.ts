@@ -51,6 +51,8 @@ const paginas = defineCollection({
       .min(50, 'descricao deve ter ao menos 50 caracteres (usada em <meta description>).')
       .max(160, 'descricao deve ter no máximo 160 caracteres.'),
     rota: naoVazio('rota').regex(/^[#/]/, 'rota deve começar com "/" ou "#".'),
+    manchete: z.string().trim().min(1).optional(),
+    chamadaSecao: z.string().trim().min(1).optional(),
     ordemNav: z.number().int().min(1).optional(),
     rotuloNav: z.string().trim().min(1).optional(),
   }),
@@ -103,6 +105,9 @@ const institucional = defineCollection({
     missao: naoVazio('missao'),
     identidades: z.array(naoVazio('identidade')).min(1),
     regraDeOuro: naoVazio('regraDeOuro'),
+    ctaNav: naoVazio('ctaNav'),
+    chamadaTitulo: naoVazio('chamadaTitulo'),
+    chamadaTexto: naoVazio('chamadaTexto'),
     atualizadoEm: z.coerce.date({ error: 'atualizadoEm deve ser uma data ISO (AAAA-MM-DD).' }),
   }),
 });
