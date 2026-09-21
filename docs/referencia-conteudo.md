@@ -58,7 +58,7 @@ Arquivos em `src/content/fluxos/`.
 | --- | --- | --- | --- |
 | `nome` | texto | sim | Não pode ficar vazio |
 | `numero` | número inteiro | sim | Entre 1 e 4 |
-| `soWhat` | texto | sim | Conteúdo da camada "So What?" |
+| `naPratica` | texto | sim | Conteúdo da bloco "Na prática" |
 | corpo | Markdown | sim | Descrição do fluxo |
 
 ## Unidades do ecossistema

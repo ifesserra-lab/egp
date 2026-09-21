@@ -17,7 +17,7 @@ todo na página inicial, em seções com âncora estável, citáveis em ofício 
 |---|---|---|
 | `/#sobre` | Apresentação, vínculo, portaria e modelo operacional | sim (1) |
 | `/#servicos` | Os quatro pilares, com objetivo, atividades e entregáveis | sim (2) |
-| `/#fluxos` | Os quatro fluxos, com a camada "So What?" | sim (3) |
+| `/#fluxos` | Os quatro fluxos, com a bloco "Na prática" | sim (3) |
 | `/#limites` | Tabela comparativa de fronteiras de responsabilidade | sim (4) |
 | `/#ecossistema` | Parque Alvo Serra, Núcleo Incubador e divisão EGP/Agifes | sim (5) |
 | `/#contato` | Canais oficiais e sua situação | sim (6) |

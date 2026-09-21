@@ -112,9 +112,9 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
             <div class="passo__n" aria-hidden="true">{item.data.numero}</div>
             <h3>{item.data.nome}</h3>
             <div class="prosa"><Content /></div>
-            <p class="sowhat">
-              <strong>So what?</strong>
-              {item.data.soWhat}
+            <p class="na-pratica">
+              <strong>Na prática</strong>
+              {item.data.naPratica}
             </p>
           </article>
         ))}
@@ -384,7 +384,7 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     margin: 0;
   }
 
-  .sowhat {
+  .na-pratica {
     background: var(--marca-suave);
     border-radius: 8px;
     padding: 0.75rem 0.9rem;
@@ -392,7 +392,7 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     margin: 0;
   }
 
-  .sowhat strong {
+  .na-pratica strong {
     display: block;
     font-size: 0.75rem;
     text-transform: uppercase;

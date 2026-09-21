@@ -1,7 +1,7 @@
 ---
 nome: Lista de Desejos Estratégica
 numero: 2
-soWhat: >-
+naPratica: >-
   Evita a aquisição de equipamentos ociosos ("elefantes brancos"), garantindo legados de
   infraestrutura sustentável.
 ---

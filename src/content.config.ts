@@ -29,7 +29,7 @@ const fluxos = defineCollection({
   schema: z.object({
     nome: naoVazio('nome'),
     numero: z.number().int().min(1).max(4),
-    soWhat: naoVazio('soWhat'),
+    naPratica: naoVazio('naPratica'),
   }),
 });
 

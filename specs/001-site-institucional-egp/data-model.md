@@ -45,7 +45,7 @@ Os quatro fluxos da seção 5 da Carta.
 | `id` | slug do arquivo | sim | âncora em `/fluxos#<id>` |
 | `numero` | inteiro 1–4 | sim | único; corresponde a "Fluxo N" na Carta |
 | `nome` | string | sim | literal da Carta |
-| `soWhat` | string | sim | conteúdo da camada "So What?"; não vazio |
+| `naPratica` | string | sim | conteúdo da bloco "Na prática"; não vazio |
 | corpo Markdown | texto | sim | descrição do fluxo |
 
 **Regras**: exatamente 4 registros; `numero` de 1 a 4 sem repetição.
