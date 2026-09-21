@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# O endereço do sitemap acompanha a configuração "site" do build.
+# Homologação em GitHub Pages; substituir quando a CTI confirmar o domínio.
+Sitemap: https://ifesserra-lab.github.io/egp/sitemap-index.xml

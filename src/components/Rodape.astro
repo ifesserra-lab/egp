@@ -1,0 +1,61 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import CanalAtendimento from './CanalAtendimento.astro';
+
+const egp = await getEntry('institucional', 'egp');
+if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
+
+const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const atualizadoEm = egp.data.atualizadoEm;
+const atualizadoLegivel = new Intl.DateTimeFormat('pt-BR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(atualizadoEm);
+const atualizadoIso = atualizadoEm.toISOString().slice(0, 10);
+---
+
+<footer class="rodape">
+  <div class="env pilha">
+    <div class="rodape__canais">
+      <h2>Canais oficiais</h2>
+      <ul>
+        {canais.map((canal) => <CanalAtendimento canal={canal.data} compacto />)}
+      </ul>
+    </div>
+
+    <p>
+      {egp.data.nomeUnidade} · {egp.data.vinculo}<br />
+      Conteúdo atualizado em <time datetime={atualizadoIso}>{atualizadoLegivel}</time>.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding-block: var(--esp-4);
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+    border-top: 1px solid var(--linha);
+    background: var(--superficie);
+  }
+
+  .rodape__canais h2 {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    margin-bottom: 0.5rem;
+  }
+
+  .rodape__canais ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+</style>

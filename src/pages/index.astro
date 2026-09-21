@@ -1,0 +1,152 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import CartaoPilar from '../components/CartaoPilar.astro';
+import CanalAtendimento from '../components/CanalAtendimento.astro';
+import { comBase } from '../lib/url';
+
+const pagina = await getEntry('paginas', 'index');
+if (!pagina) throw new Error('Conteúdo "index" ausente em src/content/paginas/.');
+const { Content } = await render(pagina);
+
+const egp = await getEntry('institucional', 'egp');
+if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
+
+const pilares = (await getCollection('pilares')).sort((a, b) => a.data.ordem - b.data.ordem);
+const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<Base titulo={pagina.data.titulo} descricao={pagina.data.descricao} rotaAtual="/">
+  <section class="hero">
+    <div class="env hero__grade">
+      <div>
+        <p class="etiqueta">{egp.data.vinculo} · {egp.data.portaria}</p>
+        <h1>Segurança jurídica e administrativa para os projetos do {egp.data.campus.split('·').pop()?.trim()}</h1>
+        <div class="prosa"><Content /></div>
+        <ul class="apelidos">
+          {egp.data.identidades.map((identidade) => <li>{identidade}</li>)}
+        </ul>
+        <div class="botoes">
+          <a class="btn btn--primario" href={comBase('/servicos')}>Ver os serviços</a>
+          <a class="btn btn--secundario" href={comBase('/contato')}>Falar com o EGP</a>
+        </div>
+      </div>
+      <div class="missao">
+        <h2>Missão</h2>
+        <p>{egp.data.missao}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="pilares">
+    <div class="env">
+      <h2 id="pilares">Serviços</h2>
+      <p class="prosa">
+        Quatro pilares de atuação para garantir a governança institucional dos projetos de
+        pesquisa, extensão e inovação.
+      </p>
+      <div class="grade" style="margin-top: var(--esp-4)">
+        {
+          pilares.map((pilar) => (
+            <CartaoPilar
+              nome={pilar.data.nome}
+              resumo={pilar.data.resumo}
+              ordem={pilar.data.ordem}
+              href={comBase(`/servicos#${pilar.id}`)}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="canais">
+    <div class="env">
+      <h2 id="canais">Como acionar o EGP</h2>
+      <ul class="canais">
+        {canais.map((canal) => <CanalAtendimento canal={canal.data} />)}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Fundo sólido (e não gradiente) para que o contraste do texto seja verificável
+     por ferramentas automatizadas — constituição, princípio III. */
+  .hero {
+    background: var(--marca-suave);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .hero__grade {
+    display: grid;
+    gap: var(--esp-4);
+    padding-block: var(--esp-5);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 52rem) {
+    .hero__grade {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+  }
+
+  h1 {
+    margin: var(--esp-2) 0;
+  }
+
+  .hero .prosa {
+    font-size: 1.125rem;
+  }
+
+  .apelidos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: var(--esp-3) 0;
+    list-style: none;
+  }
+
+  .apelidos li {
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--marca-forte);
+  }
+
+  .botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .missao {
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-left: 5px solid var(--marca);
+    border-radius: var(--r);
+    padding: var(--esp-3);
+  }
+
+  .missao h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+  }
+
+  .canais {
+    list-style: none;
+    margin: var(--esp-3) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+</style>

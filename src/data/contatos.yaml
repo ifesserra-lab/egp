@@ -1,0 +1,17 @@
+# Canais oficiais — seção 2 e contatos finais da Carta.
+# Canal "pendente" NÃO pode ter "endereco": o site nunca publica endereço não confirmado (FR-012).
+- id: email-oficial
+  ordem: 1
+  tipo: email
+  rotulo: E-mail oficial
+  situacao: ativo
+  endereco: pge.serra@ifes.edu.br
+  observacao: Centralização de demandas e histórico oficial.
+
+- id: telefone
+  ordem: 2
+  tipo: telefone
+  rotulo: Telefone
+  situacao: ativo
+  endereco: (27) 9999-9999
+  observacao: Atendimento durante o horário de expediente do campus.

@@ -1,0 +1,24 @@
+# dependências
+node_modules/
+
+# artefatos de build
+dist/
+.astro/
+.lighthouseci/
+
+# ambiente
+.env
+.env.*
+!.env.example
+
+# logs e temporários
+*.log
+*.tmp
+*.swp
+
+# sistema operacional
+.DS_Store
+Thumbs.db
+
+# ferramentas de agente (podem guardar credenciais)
+.claude/

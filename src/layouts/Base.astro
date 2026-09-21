@@ -1,0 +1,120 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import NavPrincipal from '../components/NavPrincipal.astro';
+import Rodape from '../components/Rodape.astro';
+import { comBase } from '../lib/url';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/print.css';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  rotaAtual: string;
+}
+
+const { titulo, descricao, rotaAtual } = Astro.props;
+
+const egp = await getEntry('institucional', 'egp');
+if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
+
+const paginas = await getCollection('paginas');
+const itensNav = paginas
+  .filter((p) => p.data.ordemNav !== undefined)
+  .sort((a, b) => (a.data.ordemNav ?? 0) - (b.data.ordemNav ?? 0))
+  .map((p) => ({
+    rota: p.data.rota,
+    rotulo: p.data.rotuloNav ?? p.data.titulo,
+  }));
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo} · {egp.data.nomeCurto} — {egp.data.campus}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical.href} />
+    <meta property="og:title" content={`${titulo} · ${egp.data.nomeCurto}`} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <link rel="icon" href={comBase('/favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
+    <header class="topo">
+      <div class="env topo__linha">
+        <a class="marca" href={comBase('/')}>
+          <span class="marca__sigla" aria-hidden="true">EGP</span>
+          <span class="marca__nome">
+            {egp.data.nomeCurto}
+            <span class="marca__sub">{egp.data.campus}</span>
+          </span>
+        </a>
+        <NavPrincipal itens={itensNav} rotaAtual={rotaAtual} />
+      </div>
+    </header>
+
+    <main id="conteudo-principal">
+      <slot />
+    </main>
+
+    <Rodape />
+
+    <style>
+      .topo {
+        background: var(--superficie);
+        border-bottom: 1px solid var(--linha);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+
+      .topo__linha {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--esp-2);
+        align-items: center;
+        justify-content: space-between;
+        padding-block: 0.75rem;
+      }
+
+      .marca {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .marca__sigla {
+        display: grid;
+        place-items: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 8px;
+        background: var(--marca-forte);
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .marca__nome {
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .marca__sub {
+        display: block;
+        font-weight: 400;
+        font-size: 0.8125rem;
+        color: var(--texto-suave);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+# Seção 3 da Carta — fronteiras de responsabilidade.
+- id: suporte-administrativo
+  ordem: 1
+  egp: Suporte administrativo, metodológico e "arredondamento" de propostas.
+  coordenador: >-
+    Responsabilidade técnica, científica, extensionista e mérito pedagógico do programa, projeto
+    ou ação.
+
+- id: interface-fundacao
+  ordem: 2
+  egp: Interface tática e tramitação junto à fundação de apoio (FACTO).
+  coordenador: Decisões estratégicas da Reitoria e instâncias superiores.
+
+- id: conformidade
+  ordem: 3
+  egp: Monitoramento de conformidade e prevenção de glosas.
+  coordenador: Execução de atividades-fim e parcerias externas diretas.
+
+- id: compras
+  ordem: 4
+  egp: Gestão de fluxos de compras e TRs via Registro de Preços.
+  coordenador: Competências regimentais dos setores finalísticos do Campus.
