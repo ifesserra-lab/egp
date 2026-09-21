@@ -39,7 +39,6 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
   <section class="hero">
     <div class="env hero__grade">
       <div>
-        <p class="etiqueta">{egp.data.vinculo} · {egp.data.portaria}</p>
         <h1>{inicio.data.manchete ?? inicio.data.titulo}</h1>
         <div class="prosa"><inicio.Content /></div>
         <ul class="apelidos">

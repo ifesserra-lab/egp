@@ -122,10 +122,7 @@ Registro único com os dados transversais da Carta (seções 1 e 2).
 | Campo | Tipo | Obrigatório | Regra |
 |---|---|---|---|
 | `nomeUnidade` | string | sim | "Escritório de Gestão de Projetos (EGP) – Campus Serra" |
-| `nomeAnterior` | string | não | "PMO" |
 | `vinculo` | string | sim | "Diretoria de Pesquisa, Pós-Graduação e Extensão (DPPGE)" |
-| `portaria` | string | sim | "Portaria nº 190/2026" |
-| `cargaHoraria` | string | sim | "4h semanais" |
 | `missao` | string | sim | texto literal da missão |
 | `identidades` | lista de string | sim | "Motor Tático", "Engrenagem de Maturidade Institucional" |
 | `regraDeOuro` | string | sim | texto da Regra de Ouro |

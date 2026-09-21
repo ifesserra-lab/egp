@@ -27,11 +27,8 @@ Arquivo `src/data/institucional.yaml`, registro único sob a chave `egp`.
 | --- | --- | --- | --- |
 | `nomeUnidade` | texto | sim | Nome completo da unidade, exibido no rodapé |
 | `nomeCurto` | texto | sim | Nome exibido no cabeçalho e no título das páginas |
-| `nomeAnterior` | texto | não | Denominação anterior da unidade |
 | `campus` | texto | sim | Identificação do campus |
 | `vinculo` | texto | sim | Unidade à qual o EGP é vinculado |
-| `portaria` | texto | sim | Portaria que rege a atuação |
-| `cargaHoraria` | texto | sim | Carga horária prevista na portaria |
 | `missao` | texto | sim | Texto da missão, exibido na página inicial |
 | `identidades` | lista de texto | sim | Identidades institucionais exibidas como etiquetas |
 | `regraDeOuro` | texto | sim | Texto destacado no topo da seção de Fluxos |

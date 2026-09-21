@@ -97,11 +97,8 @@ const institucional = defineCollection({
   schema: z.object({
     nomeUnidade: naoVazio('nomeUnidade'),
     nomeCurto: naoVazio('nomeCurto'),
-    nomeAnterior: z.string().trim().min(1).optional(),
     campus: naoVazio('campus'),
     vinculo: naoVazio('vinculo'),
-    portaria: naoVazio('portaria'),
-    cargaHoraria: naoVazio('cargaHoraria'),
     missao: naoVazio('missao'),
     identidades: z.array(naoVazio('identidade')).min(1),
     regraDeOuro: naoVazio('regraDeOuro'),
