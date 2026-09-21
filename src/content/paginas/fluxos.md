@@ -2,7 +2,7 @@
 titulo: Fluxos Operacionais
 descricao: Como o EGP conduz captação, alinhamento ao PDI, validação de infraestrutura e compras em escala no Campus Serra.
 rota: "#fluxos"
-chamadaSecao: Quatro fluxos, uma regra inegociável
+chamadaSecao: Quatro fluxos adaptados ao seu projeto
 ordemNav: 2
 rotuloNav: Como funciona
 ---

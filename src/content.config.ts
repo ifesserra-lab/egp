@@ -101,7 +101,6 @@ const institucional = defineCollection({
     vinculo: naoVazio('vinculo'),
     missao: naoVazio('missao'),
     identidades: z.array(naoVazio('identidade')).min(1),
-    regraDeOuro: naoVazio('regraDeOuro'),
     ctaNav: naoVazio('ctaNav'),
     chamadaTitulo: naoVazio('chamadaTitulo'),
     chamadaTexto: naoVazio('chamadaTexto'),

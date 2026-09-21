@@ -41,7 +41,7 @@ No workflow de publicação, valem `https://ifesserra-lab.github.io` e `/egp`.
 | --- | --- |
 | `/#sobre` | Apresentação e modelo operacional |
 | `/#servicos` | Os quatro pilares |
-| `/#fluxos` | Regra de Ouro e os quatro fluxos |
+| `/#fluxos` | Os quatro fluxos |
 | `/#limites` | Tabela de fronteiras de responsabilidade |
 | `/#ecossistema` | Unidades de inovação |
 | `/#contato` | Canais oficiais |

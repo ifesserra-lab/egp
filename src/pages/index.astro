@@ -106,11 +106,6 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
         <div class="prosa"><fluxos.Content /></div>
       </div>
 
-      <div class="aviso regra">
-        <span class="regra__selo">Regra de Ouro</span>
-        <p>{egp.data.regraDeOuro}</p>
-      </div>
-
       <div class="grade">
         {corposFluxos.map(({ item, Content }) => (
           <article class="cartao fluxo" id={item.id}>
@@ -374,25 +369,6 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
 
   .pilar__listas li + li {
     margin-top: 0.35rem;
-  }
-
-  .regra {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--esp-2);
-    align-items: baseline;
-    margin-block: var(--esp-4);
-  }
-
-  .regra p {
-    margin: 0;
-    flex: 1 1 20rem;
-  }
-
-  .regra__selo {
-    font-weight: 700;
-    color: var(--destaque);
-    white-space: nowrap;
   }
 
   .fluxo__n {
