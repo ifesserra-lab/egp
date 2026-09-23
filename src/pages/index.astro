@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import CanalAtendimento from '../components/CanalAtendimento.astro';
 import TabelaComparativa from '../components/TabelaComparativa.astro';
+import CalculadoraDoaci from '../components/CalculadoraDoaci.astro';
 
 const egp = await getEntry('institucional', 'egp');
 if (!egp) throw new Error('Registro "egp" ausente em src/data/institucional.yaml.');
@@ -17,6 +18,7 @@ const inicio = await pagina('index');
 const sobre = await pagina('sobre');
 const servicos = await pagina('servicos');
 const fluxos = await pagina('fluxos');
+const doaci = await pagina('doaci');
 const limites = await pagina('limites');
 const ecossistema = await pagina('ecossistema');
 const contato = await pagina('contato');
@@ -29,6 +31,15 @@ const corposFluxos = await Promise.all(listaFluxos.map(async (f) => ({ item: f, 
 
 const unidades = (await getCollection('ecossistema')).sort((a, b) => a.data.ordem - b.data.ordem);
 const corposUnidades = await Promise.all(unidades.map(async (u) => ({ item: u, ...(await render(u)) })));
+
+const procedimentos = (await getCollection('procedimentos')).sort((a, b) => a.data.ordem - b.data.ordem);
+const corposProcedimentos = await Promise.all(procedimentos.map(async (p) => ({ item: p, ...(await render(p)) })));
+
+const faixasDoaci = (await getCollection('doaciFaixas')).sort((a, b) => a.data.ordem - b.data.ordem);
+const referenciasDoaci = (await getCollection('doaciReferencias')).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const textosDoaci = await getEntry('calculadora', 'doaci');
+if (!textosDoaci) throw new Error('Registro "doaci" ausente em src/data/calculadora.yaml.');
 
 const fronteiras = (await getCollection('fronteiras')).sort((a, b) => a.data.ordem - b.data.ordem);
 const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b.data.ordem);
@@ -119,6 +130,72 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
           </article>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="secao" id="doaci" aria-labelledby="t-doaci">
+    <div class="env pilha">
+      <div class="cabecalho-secao">
+        <p class="etiqueta">{textosDoaci.data.etiqueta}</p>
+        <h2 id="t-doaci">{doaci.data.chamadaSecao ?? doaci.data.titulo}</h2>
+        <div class="prosa"><doaci.Content /></div>
+      </div>
+
+      <aside class="aviso escopo" aria-labelledby="t-doaci-escopo">
+        <h3 class="escopo__titulo" id="t-doaci-escopo">{textosDoaci.data.tituloEscopo}</h3>
+        <p class="escopo__texto">{textosDoaci.data.avisoEscopo}</p>
+      </aside>
+
+      <div class="documentos">
+        <h3 class="doaci__titulo doaci__titulo--primeiro">{textosDoaci.data.tituloDocumentos}</h3>
+        <ul class="documentos__lista">
+          {referenciasDoaci
+            .filter((ref) => ref.data.destaque)
+            .map((ref) => (
+              <li>
+                <a class="documento" href={ref.data.url} rel="external noopener">
+                  <span class="documento__nome">{ref.data.titulo}</span>
+                  {ref.data.formato && <span class="documento__formato">{ref.data.formato}</span>}
+                </a>
+              </li>
+            ))}
+        </ul>
+      </div>
+
+      <CalculadoraDoaci
+        textos={textosDoaci.data}
+        faixas={faixasDoaci.map((f) => f.data)}
+      />
+
+      <h3 class="doaci__titulo">{textosDoaci.data.tituloProcedimentos}</h3>
+      <ol class="procedimentos">
+        {corposProcedimentos.map(({ item, Content }) => (
+          <li class="cartao procedimento" id={item.id}>
+            <div class="passo__n" aria-hidden="true">{item.data.ordem}</div>
+            <h4>{item.data.nome}</h4>
+            <p class="procedimento__resumo">{item.data.resumo}</p>
+            <div class="prosa"><Content /></div>
+            <p class="procedimento__norma">
+              <strong>{textosDoaci.data.rotuloBaseNormativa}</strong>
+              {item.data.baseNormativa}
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <h3 class="doaci__titulo">{textosDoaci.data.tituloReferencias}</h3>
+      <ul class="referencias">
+        {referenciasDoaci.map((ref) => (
+          <li class="cartao" id={ref.id}>
+            <p class="referencia__orgao">{ref.data.orgao}</p>
+            <h4>
+              <a href={ref.data.url} rel="external noopener">{ref.data.titulo}</a>
+              {ref.data.formato && <span class="documento__formato">{ref.data.formato}</span>}
+            </h4>
+            <p class="referencia__define">{ref.data.oQueDefine}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -300,6 +377,11 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     grid-template-columns: 1fr;
   }
 
+  .chamada__grade > *,
+  .hero__grade > * {
+    min-width: 0;
+  }
+
   @media (min-width: 52rem) {
     .chamada__grade {
       grid-template-columns: 3fr 2fr;
@@ -420,13 +502,159 @@ const canais = (await getCollection('contatos')).sort((a, b) => a.data.ordem - b
     color: var(--texto-suave);
   }
 
+  .doaci__titulo {
+    margin: var(--esp-4) 0 0;
+    font-size: 1.25rem;
+  }
+
+  .doaci__titulo--primeiro {
+    margin-top: 0;
+  }
+
+  .escopo {
+    border-left: 5px solid var(--destaque);
+  }
+
+  .escopo__titulo {
+    margin: 0 0 0.4rem;
+    font-size: 1.0625rem;
+    color: var(--destaque);
+  }
+
+  .escopo__texto {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+    max-width: var(--leitura);
+  }
+
+  .documentos > * + * {
+    margin-top: var(--esp-2);
+  }
+
+  .documentos__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .documento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    height: 100%;
+    padding: 0.75rem var(--esp-2);
+    background: var(--superficie);
+    border: 1px solid var(--linha);
+    border-left: 4px solid var(--marca);
+    border-radius: var(--r);
+    text-decoration: none;
+    color: var(--marca-forte);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.35;
+  }
+
+  .documento:hover {
+    border-color: var(--marca);
+    background: var(--marca-suave);
+  }
+
+  .documento__nome {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .documento__formato {
+    flex: none;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: var(--marca-suave);
+    color: var(--marca-forte);
+    border: 1px solid var(--marca);
+  }
+
+  .procedimentos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  }
+
+  .procedimento h4 {
+    margin: 0;
+    font-size: 1.0625rem;
+  }
+
+  .procedimento__resumo {
+    margin: 0;
+    font-weight: 600;
+    color: var(--texto);
+  }
+
+  .procedimento__norma {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+    border-top: 1px solid var(--linha);
+    padding-top: 0.75rem;
+  }
+
+  .procedimento__norma strong {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+  }
+
+  .referencias {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  }
+
+  .referencias h4 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .referencia__orgao {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    font-weight: 700;
+  }
+
+  .referencia__define {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
+  }
+
   .canais {
     list-style: none;
     margin: var(--esp-3) 0 0;
     padding: 0;
     display: grid;
     gap: var(--esp-2);
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
   }
 
   .endereco {

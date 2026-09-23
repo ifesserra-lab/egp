@@ -92,6 +92,93 @@ const contatos = defineCollection({
     }),
 });
 
+const procedimentos = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/procedimentos' }),
+  schema: z.object({
+    nome: naoVazio('nome'),
+    ordem: z.number().int().min(1),
+    resumo: naoVazio('resumo').max(160, 'resumo deve ter no máximo 160 caracteres.'),
+    baseNormativa: naoVazio('baseNormativa'),
+  }),
+});
+
+const doaciFaixas = defineCollection({
+  loader: file('src/data/doaci.yaml'),
+  schema: z
+    .object({
+      id: naoVazio('id'),
+      ordem: z.number().int().min(1),
+      rotulo: naoVazio('rotulo'),
+      de: z.number({ error: 'de deve ser um número em reais.' }).min(0),
+      ate: z.number().min(0).nullable(),
+      percentual: z
+        .number({ error: 'percentual deve ser um número.' })
+        .gt(0, 'percentual deve ser maior que zero.')
+        // Teto legal do art. 74 do Decreto 9.283/2018 (constituição, princípio V).
+        .max(15, 'percentual não pode exceder 15% (Decreto nº 9.283/2018, art. 74).'),
+    })
+    .refine((faixa) => faixa.ate === null || faixa.ate > faixa.de, {
+      message: 'ate deve ser maior que de, ou null para a última faixa (aberta).',
+      path: ['ate'],
+    }),
+});
+
+const doaciReferencias = defineCollection({
+  loader: file('src/data/doaci-referencias.yaml'),
+  schema: z.object({
+    id: naoVazio('id'),
+    ordem: z.number().int().min(1),
+    titulo: naoVazio('titulo'),
+    orgao: naoVazio('orgao'),
+    url: z.url('url deve ser um endereço completo (https://...).'),
+    formato: z.enum(['PDF', 'DOC', 'XLS'], { error: 'formato deve ser PDF, DOC ou XLS.' }).optional(),
+    destaque: z.boolean().optional(),
+    oQueDefine: naoVazio('oQueDefine'),
+  }),
+});
+
+const calculadora = defineCollection({
+  loader: file('src/data/calculadora.yaml'),
+  schema: z.object({
+    etiqueta: naoVazio('etiqueta'),
+    tituloCalculadora: naoVazio('tituloCalculadora'),
+    instrucao: naoVazio('instrucao'),
+    tituloEscopo: naoVazio('tituloEscopo'),
+    avisoEscopo: naoVazio('avisoEscopo'),
+    rotuloValorTotal: naoVazio('rotuloValorTotal'),
+    ajudaValorTotal: naoVazio('ajudaValorTotal'),
+    rotuloBolsas: naoVazio('rotuloBolsas'),
+    ajudaBolsas: naoVazio('ajudaBolsas'),
+    rotuloLimiteEdital: naoVazio('rotuloLimiteEdital'),
+    ajudaLimiteEdital: naoVazio('ajudaLimiteEdital'),
+    rotuloCalcular: naoVazio('rotuloCalcular'),
+    rotuloLimpar: naoVazio('rotuloLimpar'),
+    tituloResultado: naoVazio('tituloResultado'),
+    rotuloFaixa: naoVazio('rotuloFaixa'),
+    rotuloPercentual: naoVazio('rotuloPercentual'),
+    rotuloBase: naoVazio('rotuloBase'),
+    rotuloValor: naoVazio('rotuloValor'),
+    rotuloFormula: naoVazio('rotuloFormula'),
+    notaArredondamento: naoVazio('notaArredondamento'),
+    notaLimiteEdital: naoVazio('notaLimiteEdital'),
+    erroValorTotal: naoVazio('erroValorTotal'),
+    erroBolsas: naoVazio('erroBolsas'),
+    erroBolsasMaiores: naoVazio('erroBolsasMaiores'),
+    erroLimiteEdital: naoVazio('erroLimiteEdital'),
+    erroFaixa: naoVazio('erroFaixa'),
+    avisoSemScript: naoVazio('avisoSemScript'),
+    legendaTabela: naoVazio('legendaTabela'),
+    rotuloRegiaoTabela: naoVazio('rotuloRegiaoTabela'),
+    colunaFaixa: naoVazio('colunaFaixa'),
+    colunaPercentual: naoVazio('colunaPercentual'),
+    fonteTabela: naoVazio('fonteTabela'),
+    tituloDocumentos: naoVazio('tituloDocumentos'),
+    tituloProcedimentos: naoVazio('tituloProcedimentos'),
+    tituloReferencias: naoVazio('tituloReferencias'),
+    rotuloBaseNormativa: naoVazio('rotuloBaseNormativa'),
+  }),
+});
+
 const institucional = defineCollection({
   loader: file('src/data/institucional.yaml'),
   schema: z.object({
@@ -102,6 +189,7 @@ const institucional = defineCollection({
     missao: naoVazio('missao'),
     identidades: z.array(naoVazio('identidade')).min(1),
     ctaNav: naoVazio('ctaNav'),
+    rotuloMenu: naoVazio('rotuloMenu'),
     chamadaTitulo: naoVazio('chamadaTitulo'),
     chamadaTexto: naoVazio('chamadaTexto'),
     atualizadoEm: z.coerce.date({ error: 'atualizadoEm deve ser uma data ISO (AAAA-MM-DD).' }),
@@ -116,4 +204,8 @@ export const collections = {
   fronteiras,
   contatos,
   institucional,
+  procedimentos,
+  doaciFaixas,
+  doaciReferencias,
+  calculadora,
 };

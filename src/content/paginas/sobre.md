@@ -3,7 +3,7 @@ titulo: Sobre o EGP
 descricao: Identidade, vínculo institucional, composição da equipe e modelo de custeio autossustentável do Escritório de Gestão de Projetos.
 rota: "#sobre"
 chamadaSecao: Um escritório que se paga
-ordemNav: 5
+ordemNav: 6
 rotuloNav: Sobre
 ---
 

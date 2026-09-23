@@ -3,7 +3,7 @@ titulo: Ecossistema de Inovação
 descricao: Como o EGP se articula com o Parque de Inovação Alvo Serra, o Núcleo Incubador e a Agifes, sem sombreamento de competências.
 rota: "#ecossistema"
 chamadaSecao: Sem sombreamento de competências
-ordemNav: 4
+ordemNav: 5
 rotuloNav: Ecossistema
 ---
 

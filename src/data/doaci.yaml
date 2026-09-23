@@ -1,0 +1,44 @@
+# Tabela de percentuais da DOACI — Despesas Operacionais e Administrativas de Caráter Indivisível.
+# Fonte: Resolução CCAF nº 309/2022, item 2.4.8.1 (FAPES/FUNCITEC).
+# Valores transcritos da norma, sem arredondamento (constituição, princípio V).
+- id: ate-50-mil
+  ordem: 1
+  rotulo: De R$ 0,00 a R$ 50.000,00
+  de: 0
+  ate: 50000
+  percentual: 15
+
+- id: de-50-a-100-mil
+  ordem: 2
+  rotulo: De R$ 50.000,01 a R$ 100.000,00
+  de: 50000.01
+  ate: 100000
+  percentual: 10
+
+- id: de-100-a-150-mil
+  ordem: 3
+  rotulo: De R$ 100.000,01 a R$ 150.000,00
+  de: 100000.01
+  ate: 150000
+  percentual: 5
+
+- id: de-150-a-300-mil
+  ordem: 4
+  rotulo: De R$ 150.000,01 a R$ 300.000,00
+  de: 150000.01
+  ate: 300000
+  percentual: 3
+
+- id: de-300-a-500-mil
+  ordem: 5
+  rotulo: De R$ 300.000,01 a R$ 500.000,00
+  de: 300000.01
+  ate: 500000
+  percentual: 1
+
+- id: acima-de-500-mil
+  ordem: 6
+  rotulo: Acima de R$ 500.000,00
+  de: 500000.01
+  ate: null
+  percentual: 0.5

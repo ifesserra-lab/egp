@@ -1,0 +1,61 @@
+# Base normativa da DOACI. Todo número exibido na seção deve ser rastreável a um destes documentos
+# (constituição, princípio V). Links apontam para as páginas oficiais dos órgãos emissores.
+- id: lei-inovacao
+  ordem: 1
+  titulo: Lei nº 10.973, de 2 de dezembro de 2004 (Lei da Inovação)
+  orgao: Presidência da República
+  url: https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l10.973.htm
+  oQueDefine: >-
+    Autoriza a destinação de recursos de projetos de CT&I à cobertura de despesas operacionais e
+    administrativas, na forma do regulamento.
+
+- id: decreto-9283
+  ordem: 2
+  titulo: Decreto Federal nº 9.283/2018, art. 74 (Marco Legal de CT&I)
+  orgao: Presidência da República
+  url: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9283.htm
+  oQueDefine: >-
+    Permite que acordos, convênios e contratos destinem até quinze por cento do valor total dos
+    recursos financeiros do projeto à cobertura de despesas operacionais e administrativas.
+
+- id: resolucao-309-2022
+  ordem: 3
+  titulo: Resolução CCAF nº 309/2022, item 2.4.8 e tabela 2.4.8.1
+  orgao: FAPES
+  formato: PDF
+  destaque: true
+  url: https://fapes.es.gov.br/Media/fapes/Resolu%C3%A7%C3%B5es/Resolu%C3%A7%C3%A3o%20309-2022%20-%20Itens%20financiaveis%20e%20n%C3%A3o%20financiaveis.pdf
+  oQueDefine: >-
+    Define a DOACI, fixa o limite de 15% do valor total aprovado excluindo bolsas e publica a tabela
+    de percentuais por faixa de valor do projeto.
+
+- id: nota-tecnica-001-2023
+  ordem: 4
+  titulo: Nota Técnica Explicativa Gepof-Diraf nº 001/2023 — Utilização da DOACI
+  orgao: FAPES
+  formato: PDF
+  destaque: true
+  url: https://fapes.es.gov.br/Media/fapes/Nota_T%C3%A9cnica/Nota%20T%C3%A9cnica%20Gepof-Diraf%20n%20001-2023.pdf
+  oQueDefine: >-
+    Detalha a fórmula de cálculo V = P x (T - B), traz exemplo numérico e determina que os valores de
+    DOACI sejam previstos no orçamento como Serviços de Terceiros.
+
+- id: resolucao-313-2022
+  ordem: 5
+  titulo: Resolução CCAF nº 313/2022 — Manual de Prestação de Contas (item 12.4)
+  orgao: FAPES
+  formato: PDF
+  url: https://fapes.es.gov.br/Media/fapes/Prestacao%20de%20Contas/Resolu%C3%A7%C3%A3o%20n%C2%BA%20313%20-%202022%20-%20MANUAL%20PCTF.pdf
+  oQueDefine: >-
+    Lista o Recibo de DOACI entre os documentos obrigatórios do relatório financeiro e fixa os prazos
+    de apresentação da prestação de contas.
+
+- id: formulario-5m
+  ordem: 6
+  titulo: Formulário 5M — Recibo de despesas operacionais e administrativas de caráter indivisível
+  orgao: FAPES
+  formato: DOC
+  destaque: true
+  url: https://fapes.es.gov.br/media/Importacao/Arquivos/FormulariosGerais/FORMULARIO_5M_DESPESAS_OPERACIONAIS_E_ADMINISTRATIVAS_DE_CARATER_INDIVISIVEL_-_DOACI.doc
+  oQueDefine: >-
+    Formulário oficial do recibo de DOACI que acompanha o relatório financeiro da prestação de contas.

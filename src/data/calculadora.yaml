@@ -1,0 +1,60 @@
+# Rótulos e mensagens da calculadora de DOACI.
+# Todo texto exibido pelo componente mora aqui; o componente .astro não contém texto
+# institucional (constituição, princípio II).
+doaci:
+  etiqueta: Ferramentas do EGP
+  tituloCalculadora: Calcule a DOACI do seu projeto
+  instrucao: >-
+    Informe o valor total aprovado e o total destinado a bolsas. O percentual é escolhido pela faixa
+    do valor total e aplicado apenas sobre a parte do orçamento que não é bolsa.
+
+  tituloEscopo: Vale só para projetos da FAPES
+  avisoEscopo: >-
+    A tabela de percentuais é regra da Resolução CCAF nº 309/2022, que trata dos itens financiáveis
+    com recursos da FAPES e do FUNCITEC — e só se aplica a projetos financiados por eles. Projeto de
+    outra agência (CNPq, Finep, Capes, emenda parlamentar) segue a norma da própria financiadora: o
+    teto de 15% do Decreto nº 9.283/2018 é federal, mas o escalonamento por faixa de valor é da
+    FAPES. Na dúvida sobre a fonte do recurso, procure o EGP antes de orçar a rubrica.
+
+  rotuloValorTotal: Valor total aprovado para o projeto (R$)
+  ajudaValorTotal: Valor integral aprovado, incluindo bolsas. É ele que define a faixa de percentual.
+  rotuloBolsas: Valor total destinado a bolsas (R$)
+  ajudaBolsas: Some todas as bolsas do projeto. Informe 0 se o projeto não prevê bolsas.
+  rotuloLimiteEdital: Percentual máximo fixado no edital (%) — opcional
+  ajudaLimiteEdital: >-
+    Preencha apenas se o edital fixar um teto próprio, menor que o da tabela. Em branco, vale o
+    percentual da tabela.
+
+  rotuloCalcular: Calcular DOACI
+  rotuloLimpar: Limpar
+
+  tituloResultado: Resultado do cálculo
+  rotuloFaixa: Faixa do projeto
+  rotuloPercentual: Percentual aplicado
+  rotuloBase: Base de cálculo (valor total menos bolsas)
+  rotuloValor: Valor máximo de DOACI
+  rotuloFormula: Fórmula aplicada
+  notaArredondamento: >-
+    O resultado é truncado na segunda casa decimal, porque a norma fixa um teto ("até o limite de").
+  notaLimiteEdital: Percentual do edital prevaleceu sobre o da tabela, por ser menor.
+
+  erroValorTotal: Informe um valor total aprovado maior que zero.
+  erroBolsas: Informe um valor de bolsas igual ou maior que zero.
+  erroBolsasMaiores: O valor de bolsas não pode ser maior que o valor total aprovado.
+  erroLimiteEdital: O percentual do edital deve ficar entre 0 e 15.
+  erroFaixa: Não foi possível enquadrar esse valor na tabela da Resolução CCAF nº 309/2022.
+
+  avisoSemScript: >-
+    A calculadora precisa de JavaScript. Sem ele, use a tabela abaixo para achar o percentual e
+    aplique a fórmula: DOACI = percentual x (valor total aprovado - valor de bolsas).
+
+  legendaTabela: Percentuais de DOACI por faixa de valor total aprovado do projeto.
+  rotuloRegiaoTabela: Tabela de percentuais de DOACI
+  colunaFaixa: Valor total aprovado para o projeto
+  colunaPercentual: Percentual de DOACI
+  fonteTabela: Resolução CCAF nº 309/2022, item 2.4.8.1.
+
+  tituloDocumentos: Documentos oficiais
+  tituloProcedimentos: Procedimentos
+  tituloReferencias: Base normativa
+  rotuloBaseNormativa: Base normativa
