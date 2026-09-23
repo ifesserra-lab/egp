@@ -1,0 +1,535 @@
+---
+/**
+ * Calculadora de DOACI — Despesas Operacionais e Administrativas de Caráter Indivisível.
+ *
+ * Ilha de interatividade (constituição, princípio I): a tabela de percentuais e os textos
+ * normativos são renderizados em HTML estático e continuam legíveis sem JavaScript; apenas o
+ * formulário de cálculo depende do script, e ele só aparece quando o script roda.
+ *
+ * Nenhum texto institucional vive aqui (princípio II): rótulos vêm de `src/data/calculadora.yaml`
+ * e percentuais de `src/data/doaci.yaml`.
+ */
+
+interface Faixa {
+  id: string;
+  rotulo: string;
+  de: number;
+  ate: number | null;
+  percentual: number;
+}
+
+interface Textos {
+  tituloCalculadora: string;
+  instrucao: string;
+  rotuloValorTotal: string;
+  ajudaValorTotal: string;
+  rotuloBolsas: string;
+  ajudaBolsas: string;
+  rotuloLimiteEdital: string;
+  ajudaLimiteEdital: string;
+  rotuloCalcular: string;
+  rotuloLimpar: string;
+  tituloResultado: string;
+  rotuloFaixa: string;
+  rotuloPercentual: string;
+  rotuloBase: string;
+  rotuloValor: string;
+  rotuloFormula: string;
+  notaArredondamento: string;
+  notaLimiteEdital: string;
+  erroValorTotal: string;
+  erroBolsas: string;
+  erroBolsasMaiores: string;
+  erroLimiteEdital: string;
+  erroFaixa: string;
+  avisoSemScript: string;
+  legendaTabela: string;
+  rotuloRegiaoTabela: string;
+  colunaFaixa: string;
+  colunaPercentual: string;
+  fonteTabela: string;
+}
+
+interface Props {
+  textos: Textos;
+  faixas: Faixa[];
+}
+
+const { textos, faixas } = Astro.props;
+
+const percentual = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
+
+// Dados mínimos entregues ao script: só o que o cálculo precisa.
+const regras = faixas.map((f) => ({ rotulo: f.rotulo, de: f.de, ate: f.ate, percentual: f.percentual }));
+const mensagens = {
+  erroValorTotal: textos.erroValorTotal,
+  erroBolsas: textos.erroBolsas,
+  erroBolsasMaiores: textos.erroBolsasMaiores,
+  erroLimiteEdital: textos.erroLimiteEdital,
+  erroFaixa: textos.erroFaixa,
+};
+---
+
+<div class="calc">
+  <form class="calc__form cartao" id="doaci-form" novalidate hidden>
+    <h3 class="calc__titulo">{textos.tituloCalculadora}</h3>
+    <p class="calc__instrucao">{textos.instrucao}</p>
+
+    <div class="calc__campos">
+      <p class="campo">
+        <label for="doaci-total">{textos.rotuloValorTotal}</label>
+        <input
+          id="doaci-total"
+          name="total"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          aria-describedby="doaci-total-ajuda"
+        />
+        <span class="campo__ajuda" id="doaci-total-ajuda">{textos.ajudaValorTotal}</span>
+      </p>
+
+      <p class="campo">
+        <label for="doaci-bolsas">{textos.rotuloBolsas}</label>
+        <input
+          id="doaci-bolsas"
+          name="bolsas"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          aria-describedby="doaci-bolsas-ajuda"
+        />
+        <span class="campo__ajuda" id="doaci-bolsas-ajuda">{textos.ajudaBolsas}</span>
+      </p>
+
+      <p class="campo">
+        <label for="doaci-edital">{textos.rotuloLimiteEdital}</label>
+        <input
+          id="doaci-edital"
+          name="edital"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          aria-describedby="doaci-edital-ajuda"
+        />
+        <span class="campo__ajuda" id="doaci-edital-ajuda">{textos.ajudaLimiteEdital}</span>
+      </p>
+    </div>
+
+    <p class="calc__erro" id="doaci-erro" role="alert"></p>
+
+    <div class="calc__acoes">
+      <button class="btn btn--primario" type="submit">{textos.rotuloCalcular}</button>
+      <button class="btn btn--secundario" type="reset">{textos.rotuloLimpar}</button>
+    </div>
+  </form>
+
+  <noscript>
+    <p class="aviso">{textos.avisoSemScript}</p>
+  </noscript>
+
+  <section class="calc__resultado cartao" id="doaci-resultado" aria-labelledby="doaci-resultado-titulo" tabindex="-1" hidden>
+    <h3 class="calc__titulo" id="doaci-resultado-titulo">{textos.tituloResultado}</h3>
+    <dl class="calc__saida" aria-live="polite">
+      <div>
+        <dt>{textos.rotuloFaixa}</dt>
+        <dd id="doaci-saida-faixa"></dd>
+      </div>
+      <div>
+        <dt>{textos.rotuloPercentual}</dt>
+        <dd id="doaci-saida-percentual"></dd>
+      </div>
+      <div>
+        <dt>{textos.rotuloBase}</dt>
+        <dd id="doaci-saida-base"></dd>
+      </div>
+      <div class="calc__destaque">
+        <dt>{textos.rotuloValor}</dt>
+        <dd id="doaci-saida-valor"></dd>
+      </div>
+      <div class="calc__largo">
+        <dt>{textos.rotuloFormula}</dt>
+        <dd id="doaci-saida-formula"></dd>
+      </div>
+    </dl>
+    <p class="calc__nota" id="doaci-nota-edital" hidden>{textos.notaLimiteEdital}</p>
+    <p class="calc__nota">{textos.notaArredondamento}</p>
+  </section>
+
+  <div class="tabela-rolagem" tabindex="0" role="region" aria-label={textos.rotuloRegiaoTabela}>
+    <table>
+      <caption>{textos.legendaTabela}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{textos.colunaFaixa}</th>
+          <th scope="col">{textos.colunaPercentual}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          faixas.map((faixa) => (
+            <tr id={`faixa-${faixa.id}`}>
+              <th scope="row">{faixa.rotulo}</th>
+              <td>{percentual.format(faixa.percentual)}%</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="calc__fonte">{textos.fonteTabela}</p>
+</div>
+
+<script define:vars={{ regras, mensagens }}>
+  const form = document.getElementById('doaci-form');
+  const painel = document.getElementById('doaci-resultado');
+
+  if (form && painel) {
+    // Só libera o formulário quando há script: sem ele, a tabela e os procedimentos bastam.
+    form.hidden = false;
+
+    const campoTotal = document.getElementById('doaci-total');
+    const campoBolsas = document.getElementById('doaci-bolsas');
+    const campoEdital = document.getElementById('doaci-edital');
+    const erro = document.getElementById('doaci-erro');
+    const notaEdital = document.getElementById('doaci-nota-edital');
+    const saida = {
+      faixa: document.getElementById('doaci-saida-faixa'),
+      percentual: document.getElementById('doaci-saida-percentual'),
+      base: document.getElementById('doaci-saida-base'),
+      valor: document.getElementById('doaci-saida-valor'),
+      formula: document.getElementById('doaci-saida-formula'),
+    };
+
+    const moeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const numero = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
+
+    /** Aceita "400.000,00", "400000,00" e "400000"; devolve NaN no que não for número. */
+    function paraNumero(bruto) {
+      const limpo = String(bruto ?? '').replace(/[^\d.,-]/g, '').trim();
+      if (limpo === '') return NaN;
+      let normalizado;
+      if (limpo.includes(',')) {
+        normalizado = limpo.replace(/\./g, '').replace(',', '.');
+      } else if (/^-?\d{1,3}(\.\d{3})+$/.test(limpo)) {
+        normalizado = limpo.replace(/\./g, '');
+      } else {
+        normalizado = limpo;
+      }
+      const valor = Number(normalizado);
+      return Number.isFinite(valor) ? valor : NaN;
+    }
+
+    function faixaDe(total) {
+      return regras.find((regra) => total >= regra.de && (regra.ate === null || total <= regra.ate));
+    }
+
+    /** Trunca na segunda casa: a norma fixa teto ("até o limite de"), então não se arredonda para cima. */
+    function truncarCentavos(valor) {
+      return Math.floor(valor * 100 + 1e-6) / 100;
+    }
+
+    function limparErro() {
+      erro.textContent = '';
+      for (const campo of [campoTotal, campoBolsas, campoEdital]) {
+        campo.removeAttribute('aria-invalid');
+      }
+    }
+
+    function acusarErro(campo, mensagem, focar) {
+      erro.textContent = mensagem;
+      campo.setAttribute('aria-invalid', 'true');
+      painel.hidden = true;
+      if (focar) campo.focus();
+    }
+
+    function calcular(focar) {
+      limparErro();
+
+      const total = paraNumero(campoTotal.value);
+      if (!Number.isFinite(total) || total <= 0) {
+        acusarErro(campoTotal, mensagens.erroValorTotal, focar);
+        return;
+      }
+
+      const bolsasBruto = campoBolsas.value.trim();
+      const bolsas = bolsasBruto === '' ? 0 : paraNumero(bolsasBruto);
+      if (!Number.isFinite(bolsas) || bolsas < 0) {
+        acusarErro(campoBolsas, mensagens.erroBolsas, focar);
+        return;
+      }
+      if (bolsas > total) {
+        acusarErro(campoBolsas, mensagens.erroBolsasMaiores, focar);
+        return;
+      }
+
+      const editalBruto = campoEdital.value.trim();
+      let limiteEdital = null;
+      if (editalBruto !== '') {
+        limiteEdital = paraNumero(editalBruto);
+        if (!Number.isFinite(limiteEdital) || limiteEdital < 0 || limiteEdital > 15) {
+          acusarErro(campoEdital, mensagens.erroLimiteEdital, focar);
+          return;
+        }
+      }
+
+      const faixa = faixaDe(total);
+      if (!faixa) {
+        acusarErro(campoTotal, mensagens.erroFaixa, focar);
+        return;
+      }
+
+      const percentualAplicado =
+        limiteEdital === null ? faixa.percentual : Math.min(faixa.percentual, limiteEdital);
+      const base = total - bolsas;
+      const valor = truncarCentavos(base * (percentualAplicado / 100));
+
+      painel.hidden = false;
+      notaEdital.hidden = !(limiteEdital !== null && limiteEdital < faixa.percentual);
+
+      saida.faixa.textContent = faixa.rotulo;
+      saida.percentual.textContent = numero.format(percentualAplicado) + '%';
+      saida.base.textContent = moeda.format(base);
+      saida.valor.textContent = moeda.format(valor);
+      saida.formula.textContent =
+        '(' +
+        moeda.format(total) +
+        ' − ' +
+        moeda.format(bolsas) +
+        ') × ' +
+        numero.format(percentualAplicado) +
+        '% = ' +
+        moeda.format(valor);
+
+      if (focar) painel.focus();
+    }
+
+    form.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      calcular(true);
+    });
+
+    // Depois do primeiro envio, o painel acompanha a digitação — com folga para
+    // o número terminar de ser digitado, e sem nunca roubar o foco do campo.
+    let pendente;
+    form.addEventListener('input', () => {
+      if (painel.hidden && erro.textContent === '') return;
+      window.clearTimeout(pendente);
+      pendente = window.setTimeout(() => calcular(false), 400);
+    });
+
+    form.addEventListener('reset', () => {
+      window.clearTimeout(pendente);
+      window.requestAnimationFrame(() => {
+        limparErro();
+        painel.hidden = true;
+        notaEdital.hidden = true;
+      });
+    });
+  }
+</script>
+
+<style>
+  .calc > * + * {
+    margin-top: var(--esp-3);
+  }
+
+  .calc__titulo {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .calc__instrucao {
+    margin: 0;
+    color: var(--texto-suave);
+    max-width: var(--leitura);
+    font-size: 0.9688rem;
+  }
+
+  .calc__campos {
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  }
+
+  .campo {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .campo label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .campo input {
+    font: inherit;
+    /* 1rem ou mais evita o zoom automático do iOS ao focar o campo. */
+    font-size: 1.0625rem;
+    min-height: 2.75rem;
+    color: var(--texto);
+    background: var(--fundo);
+    border: 1.5px solid var(--linha);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    width: 100%;
+  }
+
+  .campo input:focus-visible {
+    border-color: var(--marca);
+  }
+
+  .campo input[aria-invalid='true'] {
+    border-color: var(--destaque);
+  }
+
+  .campo__ajuda {
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+  }
+
+  .calc__erro {
+    margin: 0;
+    color: var(--destaque);
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .calc__erro:empty {
+    display: none;
+  }
+
+  .calc__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .calc__acoes .btn {
+    flex: 1 1 100%;
+  }
+
+  @media (min-width: 26rem) {
+    .calc__acoes .btn {
+      flex: 0 1 auto;
+    }
+  }
+
+  .calc__acoes .btn {
+    font: inherit;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+
+  .calc__acoes .btn--secundario {
+    border: 1.5px solid var(--marca);
+    background: transparent;
+  }
+
+  .calc__resultado {
+    border-left: 5px solid var(--marca);
+  }
+
+  .calc__saida {
+    display: grid;
+    gap: var(--esp-2);
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+    margin: 0;
+  }
+
+  .calc__saida > * {
+    min-width: 0;
+  }
+
+  .calc__saida dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marca-forte);
+    font-weight: 700;
+  }
+
+  .calc__saida dd {
+    margin: 0.2rem 0 0;
+    font-size: 1.0625rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .calc__destaque dd {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--marca-forte);
+    line-height: 1.2;
+  }
+
+  .calc__largo {
+    grid-column: 1 / -1;
+  }
+
+  .calc__largo dd {
+    font-size: 0.9688rem;
+    color: var(--texto-suave);
+  }
+
+  .calc__nota {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+  }
+
+  .calc__fonte {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--texto-suave);
+  }
+
+  .tabela-rolagem {
+    overflow-x: auto;
+    border: 1px solid var(--linha);
+    border-radius: var(--r);
+    background: var(--superficie);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 22rem;
+  }
+
+  caption {
+    text-align: left;
+    padding: var(--esp-2) var(--esp-3);
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.7rem var(--esp-2);
+    border-top: 1px solid var(--linha);
+    font-size: 0.9688rem;
+  }
+
+  tbody th {
+    font-weight: 600;
+  }
+
+  tbody td {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--marca-forte);
+  }
+
+  thead th {
+    background: var(--marca-suave);
+    color: var(--marca-forte);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>

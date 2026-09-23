@@ -1,16 +1,30 @@
 ---
 import { comBase } from '../lib/url';
 
+/**
+ * Navegação principal, desenhada primeiro para telas estreitas.
+ *
+ * Até 52rem o menu fica recolhido atrás de um botão, para o cabeçalho fixo não roubar
+ * um quarto da tela do celular; a partir daí vira a barra horizontal de sempre.
+ * Sem JavaScript a lista aparece inteira e continua navegável (constituição, princípio I).
+ */
+
 interface Props {
   itens: Array<{ rota: string; rotulo: string }>;
   cta: { rota: string; rotulo: string };
+  rotuloMenu: string;
 }
 
-const { itens, cta } = Astro.props;
+const { itens, cta, rotuloMenu } = Astro.props;
 ---
 
-<nav aria-label="Navegação principal">
-  <ul>
+<nav class="nav" aria-label="Navegação principal">
+  <button class="nav__botao" type="button" id="nav-botao" aria-expanded="false" aria-controls="nav-lista" hidden>
+    <span class="nav__traços" aria-hidden="true"></span>
+    {rotuloMenu}
+  </button>
+
+  <ul class="nav__lista" id="nav-lista">
     {
       itens.map((item) => (
         <li>
@@ -24,24 +38,127 @@ const { itens, cta } = Astro.props;
   </ul>
 </nav>
 
+<script>
+  const botao = document.getElementById('nav-botao') as HTMLButtonElement | null;
+  const lista = document.getElementById('nav-lista');
+
+  if (botao && lista) {
+    const estreito = window.matchMedia('(max-width: 51.999rem)');
+
+    const fechar = () => {
+      lista.hidden = true;
+      botao.setAttribute('aria-expanded', 'false');
+    };
+
+    const aplicarLargura = () => {
+      if (estreito.matches) {
+        botao.hidden = false;
+        fechar();
+      } else {
+        botao.hidden = true;
+        botao.setAttribute('aria-expanded', 'false');
+        lista.hidden = false;
+      }
+    };
+
+    botao.addEventListener('click', () => {
+      const aberto = botao.getAttribute('aria-expanded') === 'true';
+      botao.setAttribute('aria-expanded', String(!aberto));
+      lista.hidden = aberto;
+    });
+
+    // Âncora na mesma página: o menu precisa sair da frente do destino.
+    lista.addEventListener('click', (evento) => {
+      if (estreito.matches && (evento.target as HTMLElement).closest('a')) fechar();
+    });
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && estreito.matches && !lista.hidden) {
+        fechar();
+        botao.focus();
+      }
+    });
+
+    estreito.addEventListener('change', aplicarLargura);
+    aplicarLargura();
+  }
+</script>
+
 <style>
-  ul {
-    list-style: none;
+  .nav {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: center;
-    gap: 0.5rem 1.25rem;
-    margin: 0;
-    padding: 0;
+    /* Não cresce: o botão fica na mesma linha da marca, e o cabeçalho cabe em ~64px. */
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+
+  .nav__botao {
+    font: inherit;
     font-size: 0.9375rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.9rem;
+    color: var(--marca-forte);
+    background: var(--superficie);
+    border: 1.5px solid var(--linha);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .nav__traços {
+    display: block;
+    width: 1.1rem;
+    height: 2px;
+    background: currentColor;
+    box-shadow:
+      0 -6px 0 currentColor,
+      0 6px 0 currentColor;
+  }
+
+  .nav__botao[aria-expanded='true'] {
+    background: var(--marca-suave);
+    border-color: var(--marca);
+  }
+
+  .nav__lista {
+    list-style: none;
+    margin: 0;
+    /* Mobile primeiro: painel suspenso preso ao cabeçalho, que não cresce ao abrir. */
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem var(--esp-2) var(--esp-2);
+    font-size: 1rem;
+    background: var(--superficie);
+    border-top: 1px solid var(--linha);
+    /* Sem sombra: a sombra translúcida cai sobre o texto da página e derruba a
+       verificação de contraste do axe no painel aberto. */
+    border-bottom: 2px solid var(--marca);
+    max-height: calc(100dvh - var(--topo-altura));
+    overflow-y: auto;
+  }
+
+  .nav__lista[hidden] {
+    display: none;
   }
 
   a {
     text-decoration: none;
     color: var(--texto-suave);
-    padding: 0.35rem 0.1rem;
+    /* Alvo de toque de 44px (WCAG 2.5.5 / eMAG). */
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    padding: 0.35rem 0.25rem;
     border-bottom: 2px solid transparent;
-    display: inline-block;
   }
 
   a:hover {
@@ -52,6 +169,8 @@ const { itens, cta } = Astro.props;
   a.btn {
     border-bottom: none;
     color: #fff;
+    justify-content: center;
+    margin-top: 0.25rem;
   }
 
   a.btn:hover {
@@ -59,4 +178,35 @@ const { itens, cta } = Astro.props;
     border-bottom: none;
   }
 
+  @media (min-width: 52rem) {
+    .nav {
+      flex: 0 1 auto;
+    }
+
+    .nav__lista {
+      position: static;
+      padding: 0;
+      background: none;
+      border-bottom: none;
+      max-height: none;
+      overflow: visible;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.25rem;
+      font-size: 0.9375rem;
+      padding-block: 0;
+      border-top: none;
+    }
+
+    a {
+      display: inline-flex;
+      padding: 0.35rem 0.1rem;
+    }
+
+    a.btn {
+      margin-top: 0;
+      padding: 0.72rem 1.3rem;
+    }
+  }
 </style>

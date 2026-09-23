@@ -67,6 +67,83 @@ naPratica: O efeito prático do fluxo — a bloco "Na prática".
 Descrição do fluxo.
 ```
 
+## Como atualizar os percentuais da DOACI
+
+Os percentuais vivem em `src/data/doaci.yaml`. O arquivo alimenta a tabela publicada **e** a conta
+que a calculadora faz — não existe número de percentual escrito em outro lugar.
+
+Quando a FAPES alterar a tabela da Resolução CCAF nº 309/2022, edite as faixas:
+
+```yaml
+- id: de-50-a-100-mil
+  ordem: 2
+  rotulo: De R$ 50.000,01 a R$ 100.000,00
+  de: 50000.01
+  ate: 100000
+  percentual: 10
+```
+
+Três cuidados:
+
+- `de` e `ate` são número puro, com ponto decimal (`50000.01`), e não `R$ 50.000,01`. O `rotulo` é
+  que carrega o formato brasileiro exibido na tela.
+- As faixas não podem deixar buraco: o `de` de uma faixa é o centavo seguinte ao `ate` da anterior.
+- Só a última faixa usa `ate: null`, porque é aberta.
+
+Depois de editar, atualize também `src/data/doaci-referencias.yaml` se a norma que sustenta a
+tabela tiver mudado de número ou de ano, e rode `npm run dev` para conferir um cálculo conhecido na
+calculadora.
+
+## Como acrescentar ou alterar um procedimento da DOACI
+
+Crie ou edite um arquivo em `src/content/procedimentos/`. O nome do arquivo vira a âncora do
+cartão:
+
+```markdown
+---
+nome: Nome do passo
+ordem: 7
+resumo: Uma frase dizendo o que o passo resolve.
+baseNormativa: Resolução CCAF nº 000/0000, item 0.0.
+---
+
+Detalhamento do passo.
+```
+
+O campo `baseNormativa` é obrigatório de propósito: todo passo publicado precisa apontar a norma
+que o sustenta.
+
+## Como mudar um rótulo ou uma mensagem de erro da calculadora
+
+Edite `src/data/calculadora.yaml`. Ali estão os rótulos dos campos, os textos de ajuda, os títulos
+do resultado e as mensagens que aparecem quando alguém digita um valor inválido. Nenhum campo pode
+ficar vazio.
+
+Se um rótulo não aparecer no arquivo, ele não existe: a fórmula e os percentuais não são texto
+editável — percentuais estão em `src/data/doaci.yaml` e a fórmula é fixa no componente da
+calculadora.
+
+## Como acrescentar ou destacar um documento da norma
+
+Documentos vivem em `src/data/doaci-referencias.yaml`. Todos aparecem no bloco "Base normativa",
+no fim da seção; os marcados com `destaque: true` aparecem também como atalho logo acima da
+calculadora.
+
+```yaml
+- id: identificador-sem-espacos
+  ordem: 7
+  titulo: Nome da norma, com o item citado
+  orgao: FAPES
+  formato: PDF
+  destaque: true
+  url: https://fapes.es.gov.br/caminho/do/arquivo.pdf
+  oQueDefine: O que essa norma resolve sobre a DOACI.
+```
+
+Prefira o endereço do arquivo em si ao da página que o lista: o arquivo continua no lugar quando o
+site da FAPES é reorganizado. Confira o link antes de commitar — `npm run test:links` só verifica
+endereços internos.
+
 ## Como publicar um canal de atendimento que ficou disponível
 
 Canais vivem em `src/data/contatos.yaml`. Um canal em implantação aparece no site com o aviso e
