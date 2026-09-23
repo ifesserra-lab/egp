@@ -61,7 +61,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
             <span class="marca__sub">{egp.data.campus}</span>
           </span>
         </a>
-        <NavPrincipal itens={itensNav} cta={{ rota: '#contato', rotulo: egp.data.ctaNav }} />
+        <NavPrincipal
+          itens={itensNav}
+          cta={{ rota: '#contato', rotulo: egp.data.ctaNav }}
+          rotuloMenu={egp.data.rotuloMenu}
+        />
       </div>
     </header>
 
@@ -83,16 +87,28 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       .topo__linha {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--esp-2);
+        gap: 0.5rem var(--esp-2);
         align-items: center;
         justify-content: space-between;
-        padding-block: 0.75rem;
+        padding-block: 0.6rem;
+      }
+
+      @media (min-width: 52rem) {
+        .topo__linha {
+          gap: var(--esp-2);
+          padding-block: 0.75rem;
+        }
       }
 
       .marca {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        /* Base 0: sem isto a marca exige a largura do texto inteiro e empurra o botão
+           de menu para uma segunda linha, dobrando a altura do cabeçalho fixo. */
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 2.75rem;
         text-decoration: none;
         color: inherit;
       }
@@ -100,8 +116,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       .marca__sigla {
         display: grid;
         place-items: center;
-        width: 2.75rem;
-        height: 2.75rem;
+        flex: none;
+        width: 2.5rem;
+        height: 2.5rem;
         border-radius: 8px;
         background: var(--marca-forte);
         color: #fff;
@@ -112,13 +129,33 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       .marca__nome {
         font-weight: 700;
         line-height: 1.2;
+        font-size: 0.9375rem;
+        min-width: 0;
       }
 
+      @media (min-width: 52rem) {
+        .marca__sigla {
+          width: 2.75rem;
+          height: 2.75rem;
+        }
+
+        .marca__nome {
+          font-size: 1rem;
+        }
+      }
+
+      /* Abaixo de 30rem a linha do campus sai: o nome da unidade já identifica o site. */
       .marca__sub {
-        display: block;
+        display: none;
         font-weight: 400;
         font-size: 0.8125rem;
         color: var(--texto-suave);
+      }
+
+      @media (min-width: 30rem) {
+        .marca__sub {
+          display: block;
+        }
       }
     </style>
   </body>

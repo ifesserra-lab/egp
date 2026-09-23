@@ -25,6 +25,9 @@
   --alerta-bg: #fdf3e3;
   --alerta-borda: #e0bb7a;
 
+  /* Altura do cabeçalho fixo: compacto no celular, maior a partir de 52rem. */
+  --topo-altura: 4rem;
+
   --largura: 74rem;
   --leitura: 44rem;
   --r: 14px;
@@ -36,6 +39,12 @@
   --esp-6: 6rem;
 
   --fonte: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media (min-width: 52rem) {
+  :root {
+    --topo-altura: 4.75rem;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

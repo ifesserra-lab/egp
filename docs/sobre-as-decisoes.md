@@ -47,6 +47,32 @@ virar um link que não funciona.
 Quando um canal existe mas não deve aparecer — um número ainda não confirmado, por exemplo — o
 bloco é comentado no arquivo em vez de apagado. O dado não se perde e o site não o publica.
 
+## Por que o menu fica recolhido no celular
+
+Abaixo de 52rem de largura, os links do menu ficam atrás de um botão. Acima disso, viram a barra
+horizontal de sempre.
+
+A medição explica a escolha: com os sete links soltos, o cabeçalho fixo ocupava 225px em uma tela
+de 320px — quase um terço da altura visível, em toda rolagem da página. Recolhido, o cabeçalho
+mede 64px. Como o cabeçalho é `position: sticky`, cada pixel dele é um pixel que o leitor perde
+para sempre.
+
+O menu recolhido depende de JavaScript, e por isso ele começa aberto: sem script, a lista aparece
+inteira e o site continua navegável — volta a ocupar as três linhas, que é o comportamento
+correto quando a alternativa é não ter menu.
+
+## Por que a calculadora de DOACI não é obrigatória para ler a regra
+
+A seção de Ferramentas publica a tabela de percentuais, os procedimentos e os links das normas em
+HTML comum. A calculadora é um acréscimo: o formulário só aparece quando o JavaScript roda.
+
+Quem não tem script — ou usa um leitor que não executa — continua com a regra inteira na tela e a
+fórmula escrita por extenso. A conta é conveniência; a norma é o conteúdo.
+
+O percentual e as faixas não estão no código da calculadora: moram em `src/data/doaci.yaml` e
+alimentam ao mesmo tempo a tabela publicada e o cálculo. Quando a FAPES mudar a resolução, um
+arquivo de dados muda os dois, e o build recusa percentual acima do teto legal de 15%.
+
 ## Por que nenhum recurso de terceiros
 
 O site não carrega fontes, scripts, estilos nem rastreadores de fora do próprio domínio. Usa as
